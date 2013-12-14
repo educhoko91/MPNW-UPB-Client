@@ -7,11 +7,7 @@ import navalwar.client.gui.NavalWarGUI;
 import navalwar.server.gameengine.info.IWarInfo;
 import navalwar.server.gameengine.info.IArmyInfo;
 
-///////////////////////////////////////////////////////////////////////////
 
-// Hola Muchachos
-
-// hola
 
 public class ClientNetworkModule implements IClientNetworkModule {
 
