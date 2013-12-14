@@ -7,6 +7,8 @@ import navalwar.client.gui.NavalWarGUI;
 import navalwar.server.gameengine.info.IWarInfo;
 import navalwar.server.gameengine.info.IArmyInfo;
 
+///////////////////////////////////////////////////////////////////////////
+
 public class ClientNetworkModule implements IClientNetworkModule {
 
 	IGUIModule gui = null;
