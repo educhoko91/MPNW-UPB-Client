@@ -15,6 +15,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	// Constructors & singleton pattern
 	//--------------------------------------------
     
+	
     private ClientNetworkModule() {
 		// TODO complete this constructor
 	}
