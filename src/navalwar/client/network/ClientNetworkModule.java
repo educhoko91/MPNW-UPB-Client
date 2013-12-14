@@ -9,6 +9,9 @@ import navalwar.server.gameengine.info.IArmyInfo;
 
 ///////////////////////////////////////////////////////////////////////////
 
+// Hola Muchachos
+
+
 public class ClientNetworkModule implements IClientNetworkModule {
 
 	IGUIModule gui = null;
