@@ -229,7 +229,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		
 		ListWarsPanel lwp = new ListWarsPanel();
 		gamePanel.add(lwp, "listWarsPanel");
-		lwp.updateTest();
 
 		CreateArmyPanel p = new CreateArmyPanel(4, unitsPerType, shapes);
         gamePanel.add(p, "createArmyPanel");
@@ -561,9 +560,12 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_LIST_WARS_MENU_SELECTED:
+        	ListWarsPanel panel = (ListWarsPanel) gamePanel.getComponent(2);
+        	panel.loadList(net.getWarsList());
+        	
         	showPanel("listWarsPanel");
         	showMenu("listWarsMenuPanel");
-        	net.getWarsList();
+        	
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:
