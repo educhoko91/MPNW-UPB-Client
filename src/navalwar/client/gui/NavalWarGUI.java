@@ -532,6 +532,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
      * 
      * @param action
      */
+    
     private void doAction(int action) {
         int res;
         switch (action) {
