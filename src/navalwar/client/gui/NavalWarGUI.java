@@ -532,6 +532,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
      * 
      * @param action
      */
+    
     private void doAction(int action) {
         int res;
         switch (action) {
@@ -542,8 +543,16 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_CREATE_WAR_SELECTED:
-        	showPanel("createArmyPanel");
-        	showMenu("registerArmyMenuPanel");
+        	res = net.createWar("WARNAME", "WARDESC");
+        	if (res == 1) {
+                System.out.println("gui:Create war success.");
+                showPanel("createArmyPanel");
+            	showMenu("registerArmyMenuPanel");
+            }
+            else {
+                System.out.println("gui:Connection to server failed.");
+            }
+        	
         	break;
         	
         case ACTION_TO_MAIN_MENU_FROM_CREATE_WAR_MENU:

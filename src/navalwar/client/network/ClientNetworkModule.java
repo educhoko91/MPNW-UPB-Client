@@ -82,8 +82,17 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public int createWar(String name, String desc) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+			outToServer.writeBytes("CreateWarMsg" + '\n'); 
+			outToServer.writeBytes("WarName:" + name + '\n');
+			outToServer.writeBytes("WarDesc:" + desc + '\n');
+			return 1;
+		} catch (UnknownHostException e) {
+			return 2;
+		} catch (IOException e) {
+			return 3;
+		}
 	}
 
 	public int startWar(int warID) {
