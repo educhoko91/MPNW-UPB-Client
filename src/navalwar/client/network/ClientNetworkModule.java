@@ -1,5 +1,8 @@
 package navalwar.client.network;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import navalwar.client.gui.IGUIModule;
@@ -16,6 +19,8 @@ public class ClientNetworkModule implements IClientNetworkModule {
 
 	IGUIModule gui = null;
 	
+	private Socket socket = null;
+	
 	//--------------------------------------------
 	// Constructors & singleton pattern
 	//--------------------------------------------
@@ -23,7 +28,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	
 	
     private ClientNetworkModule() {
-		// TODO complete this constructor
+		
 	}
 
 	private static ClientNetworkModule instance = null;
@@ -42,8 +47,16 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public int connect(String ip, int port) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		try {
+			socket = new Socket(ip, port);
+			return 1;
+		} catch (UnknownHostException e) {
+			return 2;
+		} catch (IOException e) {
+			return 3;
+		}
+
 	}
 
 	public int disconnect() {
