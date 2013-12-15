@@ -30,6 +30,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	
 	private static final String LISTMSG = "ListMsg"; 
 	private static final String GAMESMSG = "GamesMsg"; 
+	private static final String WARIDMSG = "WarIDMsg"; 
 
 	IGUIModule gui = null;
 	
@@ -92,6 +93,10 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("CreateWarMsg" + '\n'); 
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("WarDesc:" + desc + '\n');
+			String line =  inFromServer.readLine();
+			if (line.equals(WARIDMSG)) {
+				System.out.println(line);
+			}	
 			return 1;
 		} catch (UnknownHostException e) {
 			return 2;
@@ -120,7 +125,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 					line = inFromServer.readLine();
 					System.out.println(line);
 				}
-				
 			}
 			return null;
 			
@@ -132,10 +136,24 @@ public class ClientNetworkModule implements IClientNetworkModule {
 
 	public int regArmy(int warID, String name, String[] units, int[] rows, int[] cols) {
 		try {
+			String valueURC = "";
 			outToServer.writeBytes("JOIN" + '\n');
-			for(int i = 0; i < rows.length; i++) {
-			      outToServer.writeInt(rows[i] + '\n');
+			outToServer.writeBytes("WarID:" + warID + '\n');
+			outToServer.writeBytes("WarName:" + name + '\n');
+			for(int i = 0; i < units.length; i++) {
+				valueURC = valueURC + units[i];
 			}
+			outToServer.writeBytes("Units:" + valueURC + '\n');
+			valueURC = "";
+			for(int i = 0; i < rows.length; i++) {
+				valueURC = valueURC + String.valueOf(rows[i]);
+			}
+			outToServer.writeBytes("Rows:" + valueURC + '\n');
+			valueURC = "";
+			for(int i = 0; i < cols.length; i++) {
+				valueURC = valueURC + String.valueOf(cols[i]);
+			}
+			outToServer.writeBytes("Cols:" + valueURC + '\n');
 			return 1;
 		} catch (UnknownHostException e) {
 			return 2;
