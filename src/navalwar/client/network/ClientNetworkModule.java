@@ -1,9 +1,11 @@
 package navalwar.client.network;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -83,7 +85,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 
 	public int createWar(String name, String desc) {
 		try {
-			DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
 			outToServer.writeBytes("CreateWarMsg" + '\n'); 
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("WarDesc:" + desc + '\n');
@@ -124,10 +125,18 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int regArmy(int warID, String name, String[] units, int[] rows,
-			int[] cols) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int regArmy(int warID, String name, String[] units, int[] rows, int[] cols) {
+		try {
+			outToServer.writeBytes("JOIN" + '\n');
+			for(int i = 0; i < rows.length; i++) {
+			      outToServer.writeInt(rows[i] + '\n');
+			}
+			return 1;
+		} catch (UnknownHostException e) {
+			return 2;
+		} catch (IOException e) {
+			return 3;
+		}
 	}
 
 	public int shot(int warID, int attackArmyID, int targetArmyID, int row,
