@@ -272,7 +272,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         serverPanel.add(btDisconnect);
         btConnect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                //doAction(CONNECT);
+            	doAction(CONNECT);
             	CardLayout cards = (CardLayout) gamePanel.getLayout();
             	cards.next(gamePanel);
             }
