@@ -563,6 +563,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         case ACTION_LIST_WARS_MENU_SELECTED:
         	showPanel("listWarsPanel");
         	showMenu("listWarsMenuPanel");
+        	net.getWarsList();
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:

@@ -102,22 +102,23 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public List<IWarInfo> getWarsList() {
-		StringTokenizer  tokenizer;
 		try {
 			outToServer.writeBytes(LISTMSG +"\n");
 			System.out.println("List Message Send!!!");
-			return null;
-			/*String line =  inFromServer.readLine();
+			//return null;
+			String line =  inFromServer.readLine();
 			if (line.equals(GAMESMSG)) {
-				List<IWarInfo> listWars = new ArrayList<IWarInfo>();
-				line =inFromServer.readLine();
-				while (line != null) {
-					tokenizer = new StringTokenizer(line);
-					int id = Integer.parseInt(tokenizer.nextToken(":"));
-					
+				System.out.println("In If");
+				line = inFromServer.readLine();
+				int n = Integer.parseInt(line);
+				System.out.println(n);
+				for(int i=0;i<n;i++) {
+					line = inFromServer.readLine();
+					System.out.println(line);
 				}
-			
-			}*/
+				
+			}
+			return null;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
