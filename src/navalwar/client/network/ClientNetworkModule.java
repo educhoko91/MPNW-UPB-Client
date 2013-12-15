@@ -86,8 +86,17 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public int createWar(String name, String desc) {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+			outToServer.writeBytes("CreateWarMsg" + '\n'); 
+			outToServer.writeBytes("WarName:" + name + '\n');
+			outToServer.writeBytes("WarDesc:" + desc + '\n');
+			return 1;
+		} catch (UnknownHostException e) {
+			return 2;
+		} catch (IOException e) {
+			return 3;
+		}
 	}
 
 	public int startWar(int warID) {
@@ -96,22 +105,22 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public List<IWarInfo> getWarsList() {
-		StringTokenizer  tokenizer;
 		try {
 			outToServer.writeBytes(LISTMSG +"\n");
 			System.out.println("List Message Send!!!");
-			return null;
-			/*String line =  inFromServer.readLine();
+			//return null;
+			String line =  inFromServer.readLine();
 			if (line.equals(GAMESMSG)) {
-				List<IWarInfo> listWars = new ArrayList<IWarInfo>();
-				line =inFromServer.readLine();
-				while (line != null) {
-					tokenizer = new StringTokenizer(line);
-					int id = Integer.parseInt(tokenizer.nextToken(":"));
-					
+				line = inFromServer.readLine();
+				int n = Integer.parseInt(line);
+				System.out.println(n);
+				for(int i=0;i<n;i++) {
+					line = inFromServer.readLine();
+					System.out.println(line);
 				}
-			
-			}*/
+				
+			}
+			return null;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
