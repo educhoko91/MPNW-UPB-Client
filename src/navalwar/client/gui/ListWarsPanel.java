@@ -1,6 +1,10 @@
 package navalwar.client.gui;
 
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -15,10 +19,12 @@ public class ListWarsPanel extends JPanel {
 	private JList listWars;
 	private DefaultListModel listModel;
 	private JScrollPane scrollPane;
+	private List<Integer> listWarIds;
 	
 	
 	public ListWarsPanel() {
 		listModel = new DefaultListModel();
+		listWarIds = new ArrayList<>();
 	
 		listWars = new JList(listModel);
         listWars.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -27,7 +33,8 @@ public class ListWarsPanel extends JPanel {
         listWars.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting() == false) {
-					// listWars.getSelectedIndex();
+					//int index = listWars.getSelectedIndex();
+					
 				}
 			}
 		});
@@ -65,6 +72,14 @@ public class ListWarsPanel extends JPanel {
 		listModel.addElement("another war5");
 		listModel.addElement("another war5");
 		listModel.addElement("another war5");
+		
+	}
+	
+	public void loadList(Map<Integer, String> map) {
+		for (Entry<Integer, String> item : map.entrySet()) {
+			listModel.addElement(item.getValue());
+			listWarIds.add(item.getKey());
+		}
 	}
 	
 

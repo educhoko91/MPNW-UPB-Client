@@ -1,6 +1,7 @@
 package navalwar.client.network;
 
 import java.util.List;
+import java.util.Map;
 
 import navalwar.client.gui.IGUIModule;
 import navalwar.server.gameengine.info.IArmyInfo;
@@ -87,7 +88,7 @@ public interface IClientNetworkModule {
 	 * the list of existing wars.
 	 * @return list of wars
 	 */
-	public List<IWarInfo> getWarsList();
+	public Map<Integer, String> getWarsList();
 	
 	/**
 	 * This method is called by the GUI module when the user wants to register
