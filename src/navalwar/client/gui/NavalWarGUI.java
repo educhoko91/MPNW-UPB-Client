@@ -63,7 +63,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
     private JPanel createWarMenuPanel;
     private JButton btCreateWar;
     private JButton btToMainMenuFromCreateWarMenu;
-    
 
     
     //-----------------------------------
@@ -259,11 +258,11 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         serverPanel.setBorder(BorderFactory.createTitledBorder("Server"));
         serverPanel.setLayout(new GridLayout(3,2));
         serverPanel.add(new JLabel("IP: "));
-        ip = new JTextField("127.0.0.1");
+        ip = new JTextField("172.16.1.106");
         ip.setHorizontalAlignment(JTextField.RIGHT);
         serverPanel.add(ip);
         serverPanel.add(new JLabel("Port: "));
-        port = new JTextField("7777");
+        port = new JTextField("6789");
         port.setHorizontalAlignment(JTextField.RIGHT);
         serverPanel.add(port);
         btConnect = new JButton("Connect");
@@ -273,8 +272,8 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         btConnect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
             	doAction(CONNECT);
-            	CardLayout cards = (CardLayout) gamePanel.getLayout();
-            	cards.next(gamePanel);
+            	//CardLayout cards = (CardLayout) gamePanel.getLayout();
+            	//cards.next(gamePanel);
             }
         });
         btDisconnect.addActionListener(new ActionListener() {
@@ -543,7 +542,8 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_CREATE_WAR_SELECTED:
-        	res = net.createWar("WARNAME", "WARDESC");
+        	CreateWarPanel create = (CreateWarPanel) gamePanel.getComponent(1);
+        	res = net.createWar(create.getWarName(), create.getWarDesc());
         	if (res == 1) {
                 System.out.println("gui:Create war success.");
                 showPanel("createArmyPanel");
@@ -567,6 +567,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:
+        	System.out.println("gui:Army Registered");
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");
         	break;

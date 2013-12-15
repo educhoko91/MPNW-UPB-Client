@@ -73,6 +73,6 @@ public class CreateWarPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(100,400)));
         add(panel);
         add(Box.createRigidArea(new Dimension(100,400)));
-//        add(Box.createVerticalGlue());
-        	}
+        //add(Box.createVerticalGlue());
+        }
 }
