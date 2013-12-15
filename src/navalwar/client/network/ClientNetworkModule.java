@@ -1,24 +1,20 @@
 package navalwar.client.network;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 
 import navalwar.client.gui.IGUIModule;
-import navalwar.client.gui.NavalWarGUI;
-import navalwar.server.gameengine.War;
-import navalwar.server.gameengine.info.IWarInfo;
 import navalwar.server.gameengine.info.IArmyInfo;
-import navalwar.server.gameengine.info.WarInfo;
+import navalwar.server.gameengine.info.IWarInfo;
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -110,12 +106,15 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		return 0;
 	}
 
-	public List<IWarInfo> getWarsList() {
+	public Map<Integer,String> getWarsList() {
 		try {
 			outToServer.writeBytes(LISTMSG +"\n");
 			System.out.println("List Message Send!!!");
 			//return null;
+			Map<Integer, String> map = new HashMap<Integer, String>();
+			StringTokenizer token;
 			String line =  inFromServer.readLine();
+			System.out.println(line);
 			if (line.equals(GAMESMSG)) {
 				System.out.println("In If");
 				line = inFromServer.readLine();
@@ -123,10 +122,18 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				System.out.println(n);
 				for(int i=0;i<n;i++) {
 					line = inFromServer.readLine();
-					System.out.println(line);
+					token = new StringTokenizer(line);
+					token.nextToken(":");
+					int id = Integer.parseInt(token.nextToken());
+					
+					line = inFromServer.readLine();
+					token = new StringTokenizer(line);
+					token.nextToken(":");
+					String name = token.nextToken();
+					map.put(id, name);
 				}
 			}
-			return null;
+			return map;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
