@@ -92,6 +92,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			String line =  inFromServer.readLine();
 			if (line.equals(WARIDMSG)) {
 				System.out.println(line);
+				inFromServer.readLine();
 			}	
 			return 1;
 		} catch (UnknownHostException e) {
@@ -122,11 +123,13 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				System.out.println(n);
 				for(int i=0;i<n;i++) {
 					line = inFromServer.readLine();
+					System.out.println(line);
 					token = new StringTokenizer(line);
 					token.nextToken(":");
 					int id = Integer.parseInt(token.nextToken());
 					
 					line = inFromServer.readLine();
+					System.out.println(line);
 					token = new StringTokenizer(line);
 					token.nextToken(":");
 					String name = token.nextToken();
