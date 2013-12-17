@@ -33,8 +33,7 @@ public class ListWarsPanel extends JPanel {
         listWars.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting() == false) {
-					//int index = listWars.getSelectedIndex();
-					
+					// listWars.getSelectedIndex();
 				}
 			}
 		});

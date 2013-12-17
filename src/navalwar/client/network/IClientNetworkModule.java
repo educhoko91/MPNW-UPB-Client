@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import navalwar.client.gui.IGUIModule;
-import navalwar.server.gameengine.UnitObject;
+import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
 
@@ -13,7 +13,7 @@ import navalwar.server.gameengine.info.IWarInfo;
  * It provides methods that enable the GUI module to communicate with the
  * server passing through this module.
  * 
- * @author Alfredo Villaba
+ * @author Alfredo Villalba
  */
 public interface IClientNetworkModule {
 	
@@ -101,7 +101,7 @@ public interface IClientNetworkModule {
 	 * @param cols the list of cols coordinates
 	 * @return ARMY_REGISTERED_SUCCESSFULLY or ERROR_WHEN_REGISTERING_ARMY
 	 */
-	public int regArmy(int warID, String name, List<UnitObject> unit);
+	public int regArmy(int warID, String name, List<UnitAndPlace> unit);
 	
 	/**
 	 * This method is called b the GUI module when the user wants to shot into

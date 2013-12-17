@@ -6,22 +6,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import navalwar.client.gui.IGUIModule;
-import navalwar.server.gameengine.UnitObject;
+import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
-
-///////////////////////////////////////////////////////////////////////////
-
-// Hola Muchachos
-
-// hola
 
 public class ClientNetworkModule implements IClientNetworkModule {
 	
@@ -39,10 +32,8 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	// Constructors & singleton pattern
 	//--------------------------------------------
     
-	
-	
     private ClientNetworkModule() {
-		
+		// TODO complete this constructor
 	}
 
 	private static ClientNetworkModule instance = null;
@@ -73,7 +64,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			e.printStackTrace();
 		}
 		return 0;
-
 	}
 
 	public int disconnect() {
@@ -151,16 +141,16 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int regArmy(int warID, String name, List<UnitObject> unit) {
+	public int regArmy(int warID, String name, List<UnitAndPlace> unit) {
 		try {
 			outToServer.writeBytes("JOIN" + '\n');
 			outToServer.writeBytes("WarID:" + warID + '\n');
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("UnitSize:" + unit.size() + '\n');
-			for(UnitObject u:unit){
+			for(UnitAndPlace u:unit){
 				outToServer.writeBytes("Unit:" + u.getName() + '\n');
-				outToServer.writeBytes("X:" + u.getX() + '\n');
-				outToServer.writeBytes("Y:" + u.getY() + '\n');
+				outToServer.writeBytes("X:" + u.getRow() + '\n');
+				outToServer.writeBytes("Y:" + u.getCol() + '\n');
 			}
 			String line =  inFromServer.readLine();
 			System.out.println(line);
