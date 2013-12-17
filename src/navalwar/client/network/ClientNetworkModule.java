@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import navalwar.client.gui.IGUIModule;
 import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
-
-
 
 public class ClientNetworkModule implements IClientNetworkModule {
 	
@@ -35,10 +32,8 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	// Constructors & singleton pattern
 	//--------------------------------------------
     
-	
-	
     private ClientNetworkModule() {
-		
+		// TODO complete this constructor
 	}
 
 	private static ClientNetworkModule instance = null;
@@ -69,7 +64,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			e.printStackTrace();
 		}
 		return 0;
-
 	}
 
 	public int disconnect() {

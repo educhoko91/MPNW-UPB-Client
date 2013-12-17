@@ -13,7 +13,7 @@ import navalwar.server.gameengine.info.IWarInfo;
  * It provides methods that enable the GUI module to communicate with the
  * server passing through this module.
  * 
- * @author Alfredo Villaba
+ * @author Alfredo Villalba
  */
 public interface IClientNetworkModule {
 	
