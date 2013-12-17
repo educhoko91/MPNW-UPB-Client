@@ -80,4 +80,11 @@ public class MockClientNetworkModule implements IClientNetworkModule {
 	}
 
 
+	@Override
+	public int startWar(int warID, int armyID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 }
