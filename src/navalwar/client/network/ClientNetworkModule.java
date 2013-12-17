@@ -193,12 +193,4 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		return null;
 	}
 
-
-	@Override
-	public int regArmy(int warID, String name, String[] units, int[] rows, int[] cols) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 }
