@@ -42,6 +42,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	 */
 	
 	private int warID;
+	private int armyID;
 	private String armyName;
 	private List<UnitAndPlace> units;
 	
@@ -127,6 +128,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
     private JLabel lbNumShotsReceived;
     private JLabel lbMyNumShotsInTarget;
     private JButton btSurrender;
+    private JButton btStart;
     
     private static final int INDEX_WELCOME_PANEL = 0;
     private static final int INDEX_CREATE_WAR_PANEL = 1;
@@ -164,6 +166,8 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	protected static final int ACTION_JOIN_WAR_SELECTED = 0;
 
 	protected static final int ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU = 600;
+	
+	protected static final int ACTION_START = 700;
     
 	//--------------------------------------------
 	// Constructors & singleton pattern
@@ -492,10 +496,19 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         btSurrender = new JButton("Surrender");
         playingMenuPanel.add(btSurrender);
         playingMenuPanel.add(Box.createGlue());
+        btStart = new JButton("Start Game");
+        playingMenuPanel.add(btStart);
+        playingMenuPanel.add(Box.createGlue());
         
         btSurrender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doAction(ACTION_SURRENDER);
+			}
+		});
+        
+        btStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doAction(ACTION_START);
 			}
 		});
         
@@ -653,12 +666,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				showAlert("You must place all units in the army field !!!");
 			    break;    		
 			}
-			 if (net.regArmy(this.warID, createArmyPanel.getArmyName(), units)
-					 == IClientNetworkModule.ERROR_WHEN_REGISTERING_ARMY) {
+			int armyID = net.regArmy(this.warID, createArmyPanel.getArmyName(), units);
+			 if (armyID == IClientNetworkModule.ERROR_WHEN_REGISTERING_ARMY) {
 					showAlert("It was not possible to register the army !!!");
 			   	    break;    		
 			 }
 			 else {
+				 this.armyID = armyID;
 				showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
 			 }
         	showPanel("warPanel");
@@ -679,6 +693,10 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         case ACTION_SURRENDER:
         	showPanel("welcomePanel");
         	showMenu("mainMenuPanel");
+        	break;
+        	
+        case ACTION_START:
+        	net.startWar(this.warID,this.armyID);
         	break;
 
  
