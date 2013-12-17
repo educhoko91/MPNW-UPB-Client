@@ -99,7 +99,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int startWar(int warID) {
+	public int startWar(int warID, int armyID) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -142,6 +142,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public int regArmy(int warID, String name, List<UnitAndPlace> unit) {
+		int armyID=-103;
 		try {
 			outToServer.writeBytes("JOIN" + '\n');
 			outToServer.writeBytes("WarID:" + warID + '\n');
@@ -158,13 +159,10 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				line = inFromServer.readLine();
 				StringTokenizer token = new StringTokenizer(line);
 				token.nextToken(":");
-				int id = Integer.parseInt(token.nextToken());
-				System.out.println("ArmyID:" + id);
-				return 1;
+				armyID = Integer.parseInt(token.nextToken());
+				System.out.println("ArmyID:" + armyID);
 			}
-			else{
-				return -1;
-			}
+			return armyID;
 		} catch (UnknownHostException e) {
 			return 2;
 		} catch (IOException e) {

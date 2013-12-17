@@ -13,7 +13,7 @@ import navalwar.server.gameengine.info.IWarInfo;
  * It provides methods that enable the GUI module to communicate with the
  * server passing through this module.
  * 
- * @author Alfredo Villalba
+ * @author Alfredo Villalba de MIerda!!!!!!!!1
  */
 public interface IClientNetworkModule {
 	
@@ -22,13 +22,13 @@ public interface IClientNetworkModule {
 	//-------------------------------
 
 	public static final int ERROR_WHEN_CREATING_WAR 		= -100;
-	public static final int WAR_STARTED_SUCCESSFULLY 		= 100;
-	public static final int ERROR_WHEN_STARTING_WAR 		= 101;
-	public static final int ARMY_REGISTERED_SUCCESSFULLY	= 102;
-	public static final int ERROR_WHEN_REGISTERING_ARMY		= 103;
-	public static final int SHOT_IN_TARGET					= 104;
-	public static final int SHOT_NOT_IN_TARGET				= 105;
-	public static final int ERROR_WHEN_SHOTING				= 106;
+	public static final int WAR_STARTED_SUCCESSFULLY 		= -100;
+	public static final int ERROR_WHEN_STARTING_WAR 		= -101;
+	public static final int ARMY_REGISTERED_SUCCESSFULLY	= -102;
+	public static final int ERROR_WHEN_REGISTERING_ARMY		= -103;
+	public static final int SHOT_IN_TARGET					= -104;
+	public static final int SHOT_NOT_IN_TARGET				= -105;
+	public static final int ERROR_WHEN_SHOTING				= -106;
 
 	
 	//-------------------------------
@@ -82,7 +82,7 @@ public interface IClientNetworkModule {
 	 * @param warID the ID of the war
 	 * @return WAR_STARTED_SUCCESSFULLY or ERROR_WHEN_STARTING_WAR
 	 */
-	public int startWar(int warID);
+	public int startWar(int warID, int armyID);
 	
 	/**
 	 * This method is called by the GUI module when the user wants to get
