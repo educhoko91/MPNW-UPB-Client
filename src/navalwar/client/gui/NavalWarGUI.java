@@ -1,16 +1,25 @@
 package navalwar.client.gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionListener;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.*;
 import java.awt.event.ActionEvent;
-import javax.swing.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import navalwar.client.network.IClientNetworkModule;
-
-
-import java.awt.*;
-import java.util.HashMap;
+import navalwar.server.gameengine.UnitObject;
 
 /**0
 . * This class implements the graphical user interface for
@@ -25,6 +34,15 @@ import java.util.HashMap;
  * @author alfredo.villalba@cui.unige.ch
  */
 public class NavalWarGUI extends JFrame implements IGUIModule {
+	
+	/*
+	 * Player Info
+	 */
+	
+	private int warId;
+	private String armyName;
+	private List<UnitObject> units;
+	
 
     /**
      * Listener of this graphical interface
@@ -97,6 +115,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
     private JLabel lbMyNumShotsInTarget;
     private JButton btSurrender;
     
+    private static final int INDEX_WELCOME_PANEL = 0;
+    private static final int INDEX_CREATE_WAR_PANEL = 1;
+    private static final int INDEX_LIST_WAR_PANEL = 2;
+    private static final int INDEX_CREATE_ARMY_PANEL = 3;
+    private static final int INDEX_WAR_PANEL = 4;
+    
+    
     
     
     /**
@@ -127,7 +152,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 
 	protected static final int ACTION_JOIN_WAR_SELECTED = 0;
 
-	protected static final int ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU = 0;
+	protected static final int ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU = 600;
     
 	//--------------------------------------------
 	// Constructors & singleton pattern
@@ -218,7 +243,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				}, // shape 4
 			};
 		
-		int[] unitsPerType = { 3, 3, 2, 2};
+		int[] unitsPerType = { 1, 1, 1, 1};
 		
 		
 		WelcomePanel welcome = new WelcomePanel();
@@ -257,7 +282,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         serverPanel.setBorder(BorderFactory.createTitledBorder("Server"));
         serverPanel.setLayout(new GridLayout(3,2));
         serverPanel.add(new JLabel("IP: "));
-        ip = new JTextField("172.16.1.106");
+        ip = new JTextField("192.168.30.221");
         ip.setHorizontalAlignment(JTextField.RIGHT);
         serverPanel.add(ip);
         serverPanel.add(new JLabel("Port: "));
@@ -329,7 +354,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
     	mainMenuPanel = new JPanel();
         mainMenuPanel.setLayout(new GridLayout(3,1));
         btCreateWarMenu = new JButton("Create war");
-        btListWarsMenu = new JButton("List was");
+        btListWarsMenu = new JButton("List wars");
         btExit = new JButton("Exit");
         mainMenuPanel.add(btCreateWarMenu);
         mainMenuPanel.add(btListWarsMenu);
@@ -393,6 +418,12 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 			}
 		});
         
+        btToMainMenuFromListWarsMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doAction(ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU);
+			}
+		});
+        
         btToMainMenuFromCreateWarMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doAction(ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU);
@@ -404,8 +435,8 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         
         registerArmyMenuPanel = new JPanel();
         registerArmyMenuPanel.setLayout(new GridLayout(3,2));     
-        registerArmyMenuPanel.add(new JLabel("War name:"));
-        registerArmyMenuPanel.add(new JTextField("WAR NAME"));
+        registerArmyMenuPanel.add(new JLabel("Army name:"));
+        registerArmyMenuPanel.add(new JTextField("MPNW-Army"));
         btRegArmy = new JButton("Register army");
         registerArmyMenuPanel.add(btRegArmy);
         registerArmyMenuPanel.add(Box.createGlue());
@@ -541,9 +572,10 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_CREATE_WAR_SELECTED:
-        	CreateWarPanel create = (CreateWarPanel) gamePanel.getComponent(1);
+        	CreateWarPanel create = (CreateWarPanel) gamePanel.getComponent(INDEX_CREATE_WAR_PANEL);
         	res = net.createWar(create.getWarName(), create.getWarDesc());
-        	if (res == 1) {
+        	if (res != -1) {
+        		this.warId = res;
                 System.out.println("gui:Create war success.");
                 showPanel("createArmyPanel");
             	showMenu("registerArmyMenuPanel");
@@ -560,16 +592,26 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_LIST_WARS_MENU_SELECTED:
-        	ListWarsPanel panel = (ListWarsPanel) gamePanel.getComponent(2);
-        	panel.loadList(net.getWarsList());
+        	ListWarsPanel list = (ListWarsPanel) gamePanel.getComponent(INDEX_LIST_WAR_PANEL);
+        	list.loadList(net.getWarsList());
         	
         	showPanel("listWarsPanel");
         	showMenu("listWarsMenuPanel");
         	
         	break;
         	
+        case ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU:
+        	showPanel("welcomePanel");
+        	showMenu("mainMenuPanel");
+        	break;
+        	
         case ACTION_REGISTER_ARMY_SELECTED:
-        	System.out.println("gui:Army Registered");
+        	JTextField nameTextFile = (JTextField) registerArmyMenuPanel.getComponent(1);
+        	String name = nameTextFile.getText();
+        	System.out.println(name);
+        	units.add(new UnitObject("Plane", 2, 2));
+        	units.add(new UnitObject("Tank", 5, 5));
+        	res = net.regArmy(this.warId, name, units);
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");
         	break;
@@ -619,6 +661,9 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
                     System.out.println("gui:Disonnection form server failed.");
                 }
                 break;
+                
+            case ACTION_EXIT_SELECTED:
+            	this.dispose();
         }
     }
     

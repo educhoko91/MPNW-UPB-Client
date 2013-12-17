@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import navalwar.client.gui.IGUIModule;
+import navalwar.server.gameengine.UnitObject;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
 
@@ -27,6 +28,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	private static final String LISTMSG = "ListMsg"; 
 	private static final String GAMESMSG = "GamesMsg"; 
 	private static final String WARIDMSG = "WarIDMsg"; 
+	private static final String ARMYIDMSG = "ArmyIDMsg"; 
 
 	IGUIModule gui = null;
 	
@@ -90,15 +92,19 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("WarDesc:" + desc + '\n');
 			String line =  inFromServer.readLine();
+			System.out.println(line);
 			if (line.equals(WARIDMSG)) {
-				System.out.println(line);
-				inFromServer.readLine();
-			}	
-			return 1;
+				line = inFromServer.readLine();
+				int n = Integer.parseInt(line);
+				System.out.println("WarID:" + n);
+				return n;
+			}else{
+				return -1;
+			}
 		} catch (UnknownHostException e) {
-			return 2;
+			return -1;
 		} catch (IOException e) {
-			return 3;
+			return -1;
 		}
 	}
 
@@ -127,7 +133,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 					token = new StringTokenizer(line);
 					token.nextToken(":");
 					int id = Integer.parseInt(token.nextToken());
-					
+
 					line = inFromServer.readLine();
 					System.out.println(line);
 					token = new StringTokenizer(line);
@@ -144,26 +150,24 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int regArmy(int warID, String name, String[] units, int[] rows, int[] cols) {
+	public int regArmy(int warID, String name, List<UnitObject> unit) {
 		try {
-			String valueURC = "";
 			outToServer.writeBytes("JOIN" + '\n');
 			outToServer.writeBytes("WarID:" + warID + '\n');
 			outToServer.writeBytes("WarName:" + name + '\n');
-			for(int i = 0; i < units.length; i++) {
-				valueURC = valueURC + units[i];
+			outToServer.writeBytes("UnitSize:" + unit.size() + '\n');
+			for(UnitObject u:unit){
+				outToServer.writeBytes("Unit:" + u.getName() + '\n');
+				outToServer.writeBytes("X:" + u.getX() + '\n');
+				outToServer.writeBytes("Y:" + u.getY() + '\n');
 			}
-			outToServer.writeBytes("Units:" + valueURC + '\n');
-			valueURC = "";
-			for(int i = 0; i < rows.length; i++) {
-				valueURC = valueURC + String.valueOf(rows[i]);
+			String line =  inFromServer.readLine();
+			System.out.println(line);
+			if (line.equals(ARMYIDMSG)) {
+				line = inFromServer.readLine();
+				int n = Integer.parseInt(line);
+				System.out.println("ArmyID:" + n);
 			}
-			outToServer.writeBytes("Rows:" + valueURC + '\n');
-			valueURC = "";
-			for(int i = 0; i < cols.length; i++) {
-				valueURC = valueURC + String.valueOf(cols[i]);
-			}
-			outToServer.writeBytes("Cols:" + valueURC + '\n');
 			return 1;
 		} catch (UnknownHostException e) {
 			return 2;
@@ -186,6 +190,13 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	public IArmyInfo getArmyInfo(int warID, int armyID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public int regArmy(int warID, String name, String[] units, int[] rows, int[] cols) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

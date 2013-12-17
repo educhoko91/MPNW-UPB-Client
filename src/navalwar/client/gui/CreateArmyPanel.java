@@ -24,7 +24,7 @@ public class CreateArmyPanel extends JPanel {
 		
 	
 		private JLayeredPane layeredPane;
-		private FieldPanel field;
+		private ArmyCreateFieldPanel field;
 		private UnitPanel[] units;
 		private int numUnits;
 		
@@ -36,7 +36,7 @@ public class CreateArmyPanel extends JPanel {
 			 layeredPane = new JLayeredPane();
 		     layeredPane.setPreferredSize(new Dimension(500, 400));
 			 
-		     field = new FieldPanel(10,10);
+		     field = new ArmyCreateFieldPanel(10,10);
 		     field.setBounds(0, 0, 200, 200);
 		     layeredPane.add(field, 0, 0);
 		     
