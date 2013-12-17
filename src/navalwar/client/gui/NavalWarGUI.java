@@ -543,7 +543,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         case ACTION_CREATE_WAR_SELECTED:
         	CreateWarPanel create = (CreateWarPanel) gamePanel.getComponent(1);
         	res = net.createWar(create.getWarName(), create.getWarDesc());
-        	if (res == 1) {
+        	if (res != -1) {
                 System.out.println("gui:Create war success.");
                 showPanel("createArmyPanel");
             	showMenu("registerArmyMenuPanel");
