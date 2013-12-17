@@ -613,7 +613,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         		showAlert("You must provide a war name !!!");
         		break;
         	}
-        	int warID = net.createWar(createWarPanel.getName(), createWarPanel.getWarDesc());
+        	int warID = net.createWar(createWarPanel.getWarName(), createWarPanel.getWarDesc());
         	if (warID == IClientNetworkModule.ERROR_WHEN_CREATING_WAR) {
         		showAlert("It was not possible to create the war !!!");
         		break;
@@ -646,25 +646,18 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:
-        	/*if (!createArmyPanel.areAllUnitsPlaced()) {
-           		showAlert("You must place all units in the army field !!!");
-           	    break;    		
-        	}
-        	 if (net.regArmy(this.warID, createArmyPanel.getArmyName(), createArmyPanel.getUnitsAndPlaces())
-        			 == IClientNetworkModule.ERROR_WHEN_REGISTERING_ARMY) {
-            		showAlert("It was not possible to register the army !!!");
-               	    break;    		
-        	 }
-        	 else {
-         		showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
-        	 }*/
-        	JTextField nameTextFile = (JTextField) registerArmyMenuPanel.getComponent(1);
-        	String name = nameTextFile.getText();
-        	System.out.println(name);
-        	this.units = new ArrayList<>();
-        	this.units.add(new UnitAndPlace("Plane", 2, 2));
-        	this.units.add(new UnitAndPlace("Tank", 5, 5));
-        	res = net.regArmy(this.warID, name, units);
+			if (!createArmyPanel.areAllUnitsPlaced()) {
+				showAlert("You must place all units in the army field !!!");
+			    break;    		
+			}
+			 if (net.regArmy(this.warID, createArmyPanel.getArmyName(), createArmyPanel.getUnitsAndPlaces())
+					 == IClientNetworkModule.ERROR_WHEN_REGISTERING_ARMY) {
+					showAlert("It was not possible to register the army !!!");
+			   	    break;    		
+			 }
+			 else {
+				showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
+			 }
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");
         	break;
