@@ -575,6 +575,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	CreateWarPanel create = (CreateWarPanel) gamePanel.getComponent(INDEX_CREATE_WAR_PANEL);
         	res = net.createWar(create.getWarName(), create.getWarDesc());
         	if (res != -1) {
+        		warId = res;
                 System.out.println("gui:Create war success.");
                 showPanel("createArmyPanel");
             	showMenu("registerArmyMenuPanel");
