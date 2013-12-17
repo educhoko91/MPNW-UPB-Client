@@ -609,8 +609,9 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	JTextField nameTextFile = (JTextField) registerArmyMenuPanel.getComponent(1);
         	String name = nameTextFile.getText();
         	System.out.println(name);
-        	units.add(new UnitObject("Plane", 2, 2));
-        	units.add(new UnitObject("Tank", 5, 5));
+        	this.units = new ArrayList<>();
+        	this.units.add(new UnitObject("Plane", 2, 2));
+        	this.units.add(new UnitObject("Tank", 5, 5));
         	res = net.regArmy(this.warId, name, units);
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");
