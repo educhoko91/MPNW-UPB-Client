@@ -157,5 +157,4 @@ public class UnitPanel extends JPanel {
 	}
 	
 	
-	
 }
