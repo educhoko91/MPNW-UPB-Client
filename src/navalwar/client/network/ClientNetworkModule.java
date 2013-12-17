@@ -166,10 +166,15 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			System.out.println(line);
 			if (line.equals(ARMYIDMSG)) {
 				line = inFromServer.readLine();
-				int n = Integer.parseInt(line);
-				System.out.println("ArmyID:" + n);
+				StringTokenizer token = new StringTokenizer(line);
+				token.nextToken(":");
+				int id = Integer.parseInt(token.nextToken());
+				System.out.println("ArmyID:" + id);
+				return 1;
 			}
-			return 1;
+			else{
+				return -1;
+			}
 		} catch (UnknownHostException e) {
 			return 2;
 		} catch (IOException e) {
