@@ -78,6 +78,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 
 	public int disconnect() {
 		try {
+			outToServer.writeBytes("DISCONNECT" + '\n');
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
