@@ -20,22 +20,34 @@ public class UnitPanel extends JPanel {
 	public static final int CELL_SIZE_X = IMG_EMPTY_CELL.getIconWidth();
 	public static final int CELL_SIZE_Y = IMG_EMPTY_CELL.getIconHeight();
 
+	private CreateArmyPanel createArmyPanel;
+	private ArmyPanel armyPanel;
+	
+	private int[][] shape;
 	private JLabel[][] cells;
 	private int numRows;
 	private int numCols;
+
 	private int sizeX;
 	private int sizeY;
 	
 	private int homeX;
 	private int homeY;
 	
+	private int row;
+	private int col;
+
 	private UnitPanel instance = null;
 	
 	private Point mousePt;
 
-	public UnitPanel(int numRows, int numCols, int[][] shape) {
-		this.instance = this;
+	public UnitPanel(CreateArmyPanel createArmyPanel, ArmyPanel armyPanel, int numRows, int numCols, int[][] shape) {
+		instance = this;
 		
+		this.createArmyPanel = createArmyPanel;
+		this.armyPanel = armyPanel;
+		
+		this.shape = shape;
 		this.numRows = numRows;
 		this.numCols = numCols;
 		cells = new JLabel[numRows][numCols];
@@ -43,6 +55,9 @@ public class UnitPanel extends JPanel {
 		sizeX = numCols*CELL_SIZE_X;
 		sizeY = numRows*CELL_SIZE_Y;
 
+		row = -1;
+		col = -1;
+		
 		this.setLayout(new GridLayout(numRows, numCols));
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numCols; j++) {
@@ -61,24 +76,38 @@ public class UnitPanel extends JPanel {
 					cell.addMouseListener(new MouseListener() {
 						public void mouseReleased(MouseEvent e) {
 							
-							int cellX1 = (int) Math.round((double) instance.getX() / CELL_SIZE_X);
-							int cellY1 = (int) Math.round((double) instance.getY() / CELL_SIZE_Y);
+							int cellX1 = (int) Math.round((double) (instance.getX() - instance.armyPanel.getX()) / CELL_SIZE_X);
+							int cellY1 = (int) Math.round((double) (instance.getY() - instance.armyPanel.getY()) / CELL_SIZE_Y);
 							int cellX2 = cellX1 + instance.numCols - 1;
 							int cellY2 = cellY1 + instance.numRows - 1;
 							
-							if ((cellX1 >= 0) && (cellX1 <= 9) &&
-									(cellY1 >= 0) && (cellY1 <= 9) &&
-									(cellX2 >= 0) && (cellX2 <= 9) &&
-									(cellY2 >= 0) && (cellY2 <= 9)) {
-								instance.setBounds(cellX1 * CELL_SIZE_X, cellY1 * CELL_SIZE_Y, sizeX, sizeY);
+							if ((cellX1 >= 0) && (cellX1 < instance.armyPanel.getNumCols()) &&
+									(cellY1 >= 0) && (cellY1 < instance.armyPanel.getNumRows()) &&
+									(cellX2 >= 0) && (cellX2 < instance.armyPanel.getNumCols()) &&
+									(cellY2 >= 0) && (cellY2 < instance.armyPanel.getNumRows()) &&
+									(instance.createArmyPanel.canPlaceUnit(cellY1, cellX1, instance.shape))) {
+								
+								instance.createArmyPanel.placeUnit(cellY1, cellX1, instance.shape);
+								
+								instance.setBounds(
+										instance.armyPanel.getX() + cellX1 * CELL_SIZE_X,
+										instance.armyPanel.getY() + cellY1 * CELL_SIZE_Y,
+										sizeX, sizeY);
+								
+								row = cellY1;
+								col = cellX1;
 							}
 							else {
 								instance.setBounds(homeX, homeY, sizeX, sizeY);
+								row = -1;
+								col = -1;
 							}
 							
 						}
 						public void mousePressed(MouseEvent e) {
 							mousePt = e.getPoint();
+							if ((row != -1) && (col != -1)) 
+								instance.createArmyPanel.takeOffUnit(row, col, instance.shape);
 						}
 						public void mouseExited(MouseEvent e) { }
 						public void mouseEntered(MouseEvent e) { }
@@ -111,8 +140,22 @@ public class UnitPanel extends JPanel {
 		homeY = y;
 	}
 	
+	public int getHomeX() { return homeX; }
+	public int getHomeY() { return homeY; }
+	
+	public int getRow() { return row; }
+	public int getCol() { return col; }
+	
 
 	int getSizeX() { return sizeX; }
 	int getSizeY() { return sizeY; }
+
+
+	public boolean isPlaced() {
+		return ((row >= 0) && (row < armyPanel.getNumRows()) &&
+				(col >= 0) && (col < armyPanel.getNumCols()));
+	}
+	
+	
 	
 }

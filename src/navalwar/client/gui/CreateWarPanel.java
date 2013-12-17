@@ -17,15 +17,6 @@ public class CreateWarPanel extends JPanel {
 	private JTextArea tfWarName;
 	private JTextArea taWarDesc;
 	
-	public String getWarName() {
-        return tfWarName.getText();
-    }
-	
-	public String getWarDesc() {
-        return taWarDesc.getText();
-    }
-	
-	
 	public CreateWarPanel() {
         //setBorder(BorderFactory.createTitledBorder("Game"));
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -73,6 +64,15 @@ public class CreateWarPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(100,400)));
         add(panel);
         add(Box.createRigidArea(new Dimension(100,400)));
-        //add(Box.createVerticalGlue());
-        }
+//        add(Box.createVerticalGlue());
+        	}
+	
+	
+	public String getWarName() { return tfWarName.getText(); }
+	public String getWarDesc() { return taWarDesc.getText(); }
+	
+	public void resetPanel() {
+		tfWarName.setText("");
+		taWarDesc.setText("");
+	}
 }
