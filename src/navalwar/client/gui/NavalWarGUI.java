@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import navalwar.client.network.IClientNetworkModule;
-import navalwar.server.gameengine.UnitObject;
+import navalwar.server.gameengine.UnitAndPlace;
 
 /**0
 . * This class implements the graphical user interface for
@@ -41,7 +41,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	
 	private int warId;
 	private String armyName;
-	private List<UnitObject> units;
+	private List<UnitAndPlace> units;
 	
 
     /**
@@ -610,8 +610,8 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	String name = nameTextFile.getText();
         	System.out.println(name);
         	this.units = new ArrayList<>();
-        	this.units.add(new UnitObject("Plane", 2, 2));
-        	this.units.add(new UnitObject("Tank", 5, 5));
+        	this.units.add(new UnitAndPlace("Plane", 2, 2));
+        	this.units.add(new UnitAndPlace("Tank", 5, 5));
         	res = net.regArmy(this.warId, name, units);
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");

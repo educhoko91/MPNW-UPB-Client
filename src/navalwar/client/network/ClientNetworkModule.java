@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import navalwar.client.gui.IGUIModule;
-import navalwar.server.gameengine.UnitObject;
+import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
 
@@ -147,16 +147,16 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int regArmy(int warID, String name, List<UnitObject> unit) {
+	public int regArmy(int warID, String name, List<UnitAndPlace> unit) {
 		try {
 			outToServer.writeBytes("JOIN" + '\n');
 			outToServer.writeBytes("WarID:" + warID + '\n');
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("UnitSize:" + unit.size() + '\n');
-			for(UnitObject u:unit){
+			for(UnitAndPlace u:unit){
 				outToServer.writeBytes("Unit:" + u.getName() + '\n');
-				outToServer.writeBytes("X:" + u.getX() + '\n');
-				outToServer.writeBytes("Y:" + u.getY() + '\n');
+				outToServer.writeBytes("X:" + u.getRow() + '\n');
+				outToServer.writeBytes("Y:" + u.getCol() + '\n');
 			}
 			String line =  inFromServer.readLine();
 			System.out.println(line);
