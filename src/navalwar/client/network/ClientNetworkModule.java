@@ -157,7 +157,9 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			System.out.println(line);
 			if (line.equals(ARMYIDMSG)) {
 				line = inFromServer.readLine();
-				armyID = Integer.parseInt(line);
+				StringTokenizer token = new StringTokenizer(line);
+				token.nextToken(":");
+				armyID = Integer.parseInt(token.nextToken());
 				System.out.println("ArmyID:" + armyID);
 			}
 			return armyID;
