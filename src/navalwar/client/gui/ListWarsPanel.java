@@ -20,6 +20,7 @@ public class ListWarsPanel extends JPanel {
 	private DefaultListModel listModel;
 	private JScrollPane scrollPane;
 	private List<Integer> listWarIds;
+	private int selectedWarId;
 	
 	
 	public ListWarsPanel() {
@@ -33,7 +34,8 @@ public class ListWarsPanel extends JPanel {
         listWars.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting() == false) {
-					// listWars.getSelectedIndex();
+					int index = listWars.getSelectedIndex();
+					selectedWarId = listWarIds.get(index);
 				}
 			}
 		});
@@ -79,6 +81,10 @@ public class ListWarsPanel extends JPanel {
 			listModel.addElement(item.getValue());
 			listWarIds.add(item.getKey());
 		}
+	}
+	
+	public int getSelectedWarID() {
+		return this.selectedWarId;
 	}
 	
 

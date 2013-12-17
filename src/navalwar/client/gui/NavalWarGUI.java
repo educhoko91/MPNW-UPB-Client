@@ -265,7 +265,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		
 		listWarsPanel = new ListWarsPanel();
 		gamePanel.add(listWarsPanel, "listWarsPanel");
-		listWarsPanel.updateTest();
 
 		createArmyPanel = new CreateArmyPanel(4, unitsPerType, shapes);
         gamePanel.add(createArmyPanel, "createArmyPanel");
@@ -598,7 +597,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
      * 
      * @param action
      */
-    private void doAction(int action) {
+    public void doAction(int action) {
         int res;
         switch (action) {
         
@@ -647,11 +646,14 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:
+        	this.units = new ArrayList<>();
+        	this.units.add(new UnitAndPlace("Plane", 2, 2));
+        	this.units.add(new UnitAndPlace("Tank", 5, 5));
 			if (!createArmyPanel.areAllUnitsPlaced()) {
 				showAlert("You must place all units in the army field !!!");
 			    break;    		
 			}
-			 if (net.regArmy(this.warID, createArmyPanel.getArmyName(), createArmyPanel.getUnitsAndPlaces())
+			 if (net.regArmy(this.warID, createArmyPanel.getArmyName(), units)
 					 == IClientNetworkModule.ERROR_WHEN_REGISTERING_ARMY) {
 					showAlert("It was not possible to register the army !!!");
 			   	    break;    		
@@ -666,6 +668,12 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         case ACTION_TO_MAIN_MENU_FROM_REGISTER_ARMY_MENU:
         	showPanel("welcomePanel");
         	showMenu("mainMenuPanel");
+        	break;
+        	
+        case ACTION_JOIN_WAR_SELECTED:
+        	this.warID = listWarsPanel.getSelectedWarID();
+        	showPanel("createArmyPanel");
+        	showMenu("registerArmyMenuPanel");
         	break;
        
         case ACTION_SURRENDER:
@@ -761,7 +769,15 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	public int getWarID () {
+		return this.warID;
+	}
+	
+	public void setCreateWarPanel(CreateWarPanel createWarPanel) {
+		this.createWarPanel = createWarPanel;
+		
+	}
 
 }
 
