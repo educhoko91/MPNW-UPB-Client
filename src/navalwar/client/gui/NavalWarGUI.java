@@ -619,6 +619,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         		break;
         	}
         	else {
+        		this.warID = warID;
         		showAlert("The war was successfully created. Now you must define and register your army !!!");
         	}
         	createArmyPanel.resetPanel();
