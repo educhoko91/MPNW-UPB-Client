@@ -17,11 +17,7 @@ import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
 
-///////////////////////////////////////////////////////////////////////////
 
-// Hola Muchachos
-
-// hola
 
 public class ClientNetworkModule implements IClientNetworkModule {
 	

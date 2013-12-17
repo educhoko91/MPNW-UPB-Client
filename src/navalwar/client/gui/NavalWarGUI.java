@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -645,7 +646,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	break;
         	
         case ACTION_REGISTER_ARMY_SELECTED:
-        	if (!createArmyPanel.areAllUnitsPlaced()) {
+        	/*if (!createArmyPanel.areAllUnitsPlaced()) {
            		showAlert("You must place all units in the army field !!!");
            	    break;    		
         	}
@@ -656,7 +657,14 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
         	 }
         	 else {
          		showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
-        	 }
+        	 }*/
+        	JTextField nameTextFile = (JTextField) registerArmyMenuPanel.getComponent(1);
+        	String name = nameTextFile.getText();
+        	System.out.println(name);
+        	this.units = new ArrayList<>();
+        	this.units.add(new UnitAndPlace("Plane", 2, 2));
+        	this.units.add(new UnitAndPlace("Tank", 5, 5));
+        	res = net.regArmy(this.warID, name, units);
         	showPanel("warPanel");
         	showMenu("playingMenuPanel");
         	break;
