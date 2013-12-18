@@ -13,26 +13,38 @@ import javax.swing.JPanel;
 public class ArmyPanel extends JPanel {
 	
 	public static ImageIcon IMG_EMPTY_CELL = new ImageIcon("res/empty_cell.jpg");
+	public static ImageIcon IMG_SHADOW_CELL = new ImageIcon("res/shadow_cell.jpg");
 	public static ImageIcon IMG_BLOCK_CELL = new ImageIcon("res/block.jpg");
+	public static ImageIcon IMG_SHOT_CELL = new ImageIcon("res/shot_cell.jpg");
+	public static ImageIcon IMG_SHOT_BLOCK_CELL = new ImageIcon("res/shot_block.jpg");
 	
-	private JLabel[][] cells;
+	
+	private ArmyPanel instance;
+	
+	private int armyID;
+	private JCell[][] cells;
 	private int numRows;
 	private int numCols;
+	private WarPanel warPanel;
 	
 	private boolean isClickable;
 	
 	
-	public ArmyPanel(int numRows, int numCols) {
+	public ArmyPanel(WarPanel warPanel, int numRows, int numCols, boolean isShadow) {
+		instance = this;
+		this.warPanel = warPanel;
 		this.numRows = numRows;
 		this.numCols = numCols;
-		cells = new JLabel[numRows][numCols];
+		cells = new JCell[numRows][numCols];
 		
 		isClickable = false;
 
 		this.setLayout(new GridLayout(numRows, numCols));
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numCols; j++) {
-				JLabel cell = new JLabel(IMG_EMPTY_CELL);
+				JCell cell;
+				if (!isShadow) cell = new JCell(IMG_EMPTY_CELL, i, j);
+				else cell = new JCell(IMG_SHADOW_CELL, i, j);
 				cells[i][j] = cell;
 				this.add(cell);
 				
@@ -53,8 +65,10 @@ public class ArmyPanel extends JPanel {
 					}
 					
 					public void mouseClicked(MouseEvent e) {
-						if (isClickable) 
-							((JLabel)(e.getSource())).setIcon(IMG_BLOCK_CELL);
+						if (isClickable) {
+							JCell cell = ((JCell)(e.getSource()));
+							instance.warPanel.notifyClickOnCell(armyID, cell.getRow(), cell.getCol());
+						}
 					}
 				});
 			}
@@ -72,7 +86,28 @@ public class ArmyPanel extends JPanel {
 		isClickable = c;
 	}
 
+	public void drawUnit(String unitName, int row, int col) {
+		int[][] shape = NavalWarGUI.shapes.get(unitName);
+		for(int i = 0; i < shape.length; i++)
+			for(int j = 0; j < shape[0].length; j++) {
+				if (shape[i][j] == 1)
+					
+					drawBlock(row+i, col+j);
+			}
+		
+	}
 
+	private void drawBlock(int row, int col) {
+		cells[row][col].setIcon(IMG_BLOCK_CELL);
+	}
+
+	public void drawShot(int row, int col, boolean inTarget) {
+		if (inTarget) cells[row][col].setIcon(IMG_SHOT_BLOCK_CELL);
+		else cells[row][col].setIcon(IMG_SHOT_CELL);
+	}
+
+
+	
 	
 	
 	

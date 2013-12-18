@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import navalwar.client.gui.IGUIModule;
+import navalwar.client.gui.ListWarItem;
 import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
@@ -29,6 +30,7 @@ public interface IClientNetworkModule {
 	public static final int SHOT_IN_TARGET					= -104;
 	public static final int SHOT_NOT_IN_TARGET				= -105;
 	public static final int ERROR_WHEN_SHOTING				= -106;
+	public static final int ERROR_WHEN_SHOOTING 			= -107;
 
 	
 	//-------------------------------
@@ -89,7 +91,7 @@ public interface IClientNetworkModule {
 	 * the list of existing wars.
 	 * @return list of wars
 	 */
-	public Map<Integer, String> getWarsList();
+	public List<ListWarItem> getWarsList();
 	
 	/**
 	 * This method is called by the GUI module when the user wants to register

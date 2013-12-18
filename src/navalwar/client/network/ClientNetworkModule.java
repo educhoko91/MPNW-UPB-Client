@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import navalwar.client.gui.IGUIModule;
+import navalwar.client.gui.ListWarItem;
 import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
@@ -104,12 +106,12 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		return 0;
 	}
 
-	public Map<Integer,String> getWarsList() {
+	public List<ListWarItem> getWarsList() {
 		try {
 			outToServer.writeBytes(LISTMSG +"\n");
 			System.out.println("List Message Send!!!");
 			//return null;
-			Map<Integer, String> map = new HashMap<Integer, String>();
+			List<ListWarItem> list = new ArrayList<>();
 			StringTokenizer token;
 			String line =  inFromServer.readLine();
 			System.out.println(line);
@@ -130,10 +132,11 @@ public class ClientNetworkModule implements IClientNetworkModule {
 					token = new StringTokenizer(line);
 					token.nextToken(":");
 					String name = token.nextToken();
-					map.put(id, name);
+					ListWarItem item = new ListWarItem(id, name);
+					list.add(item);
 				}
 			}
-			return map;
+			return list;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -149,7 +152,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("WarName:" + name + '\n');
 			outToServer.writeBytes("UnitSize:" + unit.size() + '\n');
 			for(UnitAndPlace u:unit){
-				outToServer.writeBytes("Unit:" + u.getName() + '\n');
+				outToServer.writeBytes("Unit:" + u.getUnitName() + '\n');
 				outToServer.writeBytes("X:" + u.getRow() + '\n');
 				outToServer.writeBytes("Y:" + u.getCol() + '\n');
 			}
