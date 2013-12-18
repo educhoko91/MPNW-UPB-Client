@@ -560,8 +560,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
      * at the end of the game.
      **/
     public void showLost() {
-        // you lost... there is no more moves left!
-        System.out.println("gui:you lost!");
         JOptionPane.showMessageDialog(
                 this, "You don't have any more moves !!!", "You lost !!!",
                 JOptionPane.INFORMATION_MESSAGE,
@@ -584,8 +582,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
      * at the end of the game.
      **/
     public void showAlert(String msg) {
-        // you lost... there is no more moves left!
-        System.out.println("gui:you lost!");
         JOptionPane.showMessageDialog(
                 this, msg, "title?",
                 JOptionPane.WARNING_MESSAGE,
