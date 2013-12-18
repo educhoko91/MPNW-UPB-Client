@@ -16,10 +16,10 @@ import javax.swing.event.ListSelectionListener;
 
 public class ListWarsPanel extends JPanel {
 	
-	private JList listWars;
+	public JList listWars;
 	private DefaultListModel listModel;
 	private JScrollPane scrollPane;
-	private List<Integer> listWarIds;
+	public List<Integer> listWarIds;
 	private int selectedWarId;
 	
 	
