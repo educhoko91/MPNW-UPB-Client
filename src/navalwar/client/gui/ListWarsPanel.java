@@ -43,34 +43,6 @@ public class ListWarsPanel extends JPanel {
 	}
 
 
-	public void updateTest() {
-		listModel.addElement("guerra1");
-		listModel.addElement("this is another war");
-		listModel.addElement("another war");
-		listModel.addElement("another war2");
-		listModel.addElement("another war3");
-		listModel.addElement("another war4");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-		listModel.addElement("another war5");
-	}
-
-
 	public void resetPanel() {
 		listModel.removeAllElements();
 	}
@@ -80,10 +52,16 @@ public class ListWarsPanel extends JPanel {
 		listModel.addElement(item);
 	}
 	
-	public int getSelectWarID() {
+	public int getSelectedWarID() {
 		if (selectedIndex == -1) return -1;
 		return ((ListWarItem) listModel.get(selectedIndex)).getWarID();
 		
+	}
+
+
+	public String getSelectedWarName() {
+		if (selectedIndex == -1) return "";
+		return ((ListWarItem) listModel.get(selectedIndex)).getName();
 	}
 	
 

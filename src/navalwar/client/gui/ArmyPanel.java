@@ -22,12 +22,15 @@ public class ArmyPanel extends JPanel {
 	private ArmyPanel instance;
 	
 	private int armyID;
+	private String armyName;
+
 	private JCell[][] cells;
 	private int numRows;
 	private int numCols;
 	private WarPanel warPanel;
 	
 	private boolean isClickable;
+	private boolean isShadow;
 	
 	
 	public ArmyPanel(WarPanel warPanel, int numRows, int numCols, boolean isShadow) {
@@ -38,6 +41,7 @@ public class ArmyPanel extends JPanel {
 		cells = new JCell[numRows][numCols];
 		
 		isClickable = false;
+		this.isShadow = isShadow;
 
 		this.setLayout(new GridLayout(numRows, numCols));
 		for(int i = 0; i < numRows; i++) {
@@ -82,6 +86,8 @@ public class ArmyPanel extends JPanel {
 	public int getNumRows() { return numRows; }
 	public int getNumCols() { return numCols; }
 	
+	public void setArmyID(int armyID) { this.armyID = armyID; }
+	
 	public void setClickable(boolean c) {
 		isClickable = c;
 	}
@@ -106,13 +112,20 @@ public class ArmyPanel extends JPanel {
 		else cells[row][col].setIcon(IMG_SHOT_CELL);
 	}
 
+	public void resetArmy() {
+		armyID = -1;
+		for(int i = 0; i < numRows; i++)
+			for(int j = 0; j < numCols; j++) {
+				if (isShadow) cells[i][j].setIcon(IMG_SHADOW_CELL);
+				else cells[i][j].setIcon(IMG_EMPTY_CELL);
+			}
+	
+	}
 
+	public void setArmyName(String armyName) {
+		this.armyName = armyName;
+	}
 	
-	
-	
-	
-	
-	
-	
+	public String getArmyName() { return armyName; }
 
 }

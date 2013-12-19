@@ -189,4 +189,11 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		return null;
 	}
 
+
+	@Override
+	public int surrender(int warID, int armyID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

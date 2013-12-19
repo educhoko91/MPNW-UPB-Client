@@ -29,9 +29,9 @@ public class ListWarPanelTest {
 		panel.addWarItem(item3);
 		panel.addWarItem(item4);
 		panel.listWars.setSelectedIndex(-1);
-		assertEquals(panel.getSelectWarID(), -1);
+		assertEquals(panel.getSelectedWarID(), -1);
 		panel.listWars.setSelectedIndex(1);
-		assertEquals(panel.getSelectWarID(), 13);
+		assertEquals(panel.getSelectedWarID(), 13);
 		
 	}
 

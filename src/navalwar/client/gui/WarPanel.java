@@ -18,10 +18,10 @@ public class WarPanel extends JPanel {
 	private int numEnemiesArmies;
 	private ArmyPanel fields[][];
 	
-	
 	private int numRows;
 	private int numCols;
 	private int ownArmyID;
+
 	private NavalWarGUI navalWarGUI;
 	
 	public WarPanel(NavalWarGUI navalWarGUI, int numRows, int numCols) {
@@ -63,27 +63,37 @@ public class WarPanel extends JPanel {
 				c.insets = new Insets(10,10,10,10);
 				add(army, c);
 				fields[i][j] = army;
-
 			}
 		}
 	}
 
 	public void resetPanel() {
-		
+		ownArmy.resetArmy();
+		for(int i = 0; i < numRows; i++)
+			for(int j = 0; j < numCols; j++) {
+				fields[i][j].resetArmy();
+				fields[i][j].setVisible(false);
+			}
+		fields[0][0].setVisible(true);
+		enemiesArmies.clear();
 	}
 
-	 void addOwnArmy(List<UnitAndPlace> unitsAndPlaces) {
+	 void addOwnArmy(int ownArmyID, List<UnitAndPlace> unitsAndPlaces) {
+		 this.ownArmyID = ownArmyID;
+		 ownArmy.setArmyID(ownArmyID);
 		 for(UnitAndPlace uap : unitsAndPlaces) {
 			 ownArmy.drawUnit(uap.getUnitName(), uap.getRow(), uap.getCol());
 		 }
 	 }
 	 
-	 int addEnemyArmyField(int armyID) {
+	 int addEnemyArmyField(int armyID, String armyName) {
 		 if (numEnemiesArmies >= numCols*numRows) return IGUIModule.ERROR_NOT_MORE_SPACE_FOR_ARMIES;
 		 numEnemiesArmies++;
 		 int i = numEnemiesArmies / numCols;
 		 int j = numEnemiesArmies % numCols;
 		 ArmyPanel army = fields[i][j];
+		 army.setArmyID(armyID);
+		 army.setArmyName(armyName);
 		 enemiesArmies.put(armyID, army);
 		 army.setVisible(true);
 		 return IGUIModule.NOTIFICATION_RECEIVED_OK;
