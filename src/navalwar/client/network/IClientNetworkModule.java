@@ -1,9 +1,9 @@
 package navalwar.client.network;
 
 import java.util.List;
-import java.util.Map;
 
 import navalwar.client.gui.IGUIModule;
+import navalwar.client.gui.ListWarItem;
 import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
@@ -13,7 +13,7 @@ import navalwar.server.gameengine.info.IWarInfo;
  * It provides methods that enable the GUI module to communicate with the
  * server passing through this module.
  * 
- * @author Alfredo Villalba de MIerda!!!!!!!!1
+ * @author Alfredo Villalba
  */
 public interface IClientNetworkModule {
 	
@@ -22,13 +22,15 @@ public interface IClientNetworkModule {
 	//-------------------------------
 
 	public static final int ERROR_WHEN_CREATING_WAR 		= -100;
-	public static final int WAR_STARTED_SUCCESSFULLY 		= -100;
-	public static final int ERROR_WHEN_STARTING_WAR 		= -101;
-	public static final int ARMY_REGISTERED_SUCCESSFULLY	= -102;
-	public static final int ERROR_WHEN_REGISTERING_ARMY		= -103;
-	public static final int SHOT_IN_TARGET					= -104;
-	public static final int SHOT_NOT_IN_TARGET				= -105;
-	public static final int ERROR_WHEN_SHOTING				= -106;
+	public static final int WAR_STARTED_SUCCESSFULLY 		= -101;
+	public static final int ERROR_WHEN_STARTING_WAR 		= -102;
+	public static final int ARMY_REGISTERED_SUCCESSFULLY	= -103;
+	public static final int ERROR_WHEN_REGISTERING_ARMY		= -104;
+	public static final int SHOT_IN_TARGET					= -105;
+	public static final int SHOT_NOT_IN_TARGET				= -106;
+	public static final int ERROR_WHEN_SHOOTING				= -107;
+	public static final int ARMY_SURRENDERED_SUCCESSFULLY	= -108;
+	public static final int ERROR_WHEN_SURRENDERING			= -109;
 
 	
 	//-------------------------------
@@ -82,14 +84,14 @@ public interface IClientNetworkModule {
 	 * @param warID the ID of the war
 	 * @return WAR_STARTED_SUCCESSFULLY or ERROR_WHEN_STARTING_WAR
 	 */
-	public int startWar(int warID, int armyID);
+	public int startWar(int warID, int armyId);
 	
 	/**
 	 * This method is called by the GUI module when the user wants to get
 	 * the list of existing wars.
 	 * @return list of wars
 	 */
-	public Map<Integer, String> getWarsList();
+	public List<ListWarItem> getWarsList();
 	
 	/**
 	 * This method is called by the GUI module when the user wants to register
@@ -99,9 +101,9 @@ public interface IClientNetworkModule {
 	 * @param units the list of names of the units (Tank, Soldier, Ship, Plane)
 	 * @param rows the list of rows coordinates
 	 * @param cols the list of cols coordinates
-	 * @return ARMY_REGISTERED_SUCCESSFULLY or ERROR_WHEN_REGISTERING_ARMY
+	 * @return armyID or ERROR_WHEN_REGISTERING_ARMY
 	 */
-	public int regArmy(int warID, String name, List<UnitAndPlace> unit);
+	public int regArmy(int warID, String name, List<UnitAndPlace> unitsAndPlaces);
 	
 	/**
 	 * This method is called b the GUI module when the user wants to shot into
@@ -134,6 +136,12 @@ public interface IClientNetworkModule {
 	public IArmyInfo getArmyInfo(int warID, int armyID);
 
 
-	 
+	/**
+	 * This method is called by the GUI module when the user wants to surrender.
+	 * @param warID the ID of the war
+	 * @param armyID the ID of the army
+	 * @return ARMY_SURRENDERED_SUCCESSFULLY or ERROR_WHEN_SURRENDERING
+	 */
+	public int surrender(int warID, int armyID);
 
 }

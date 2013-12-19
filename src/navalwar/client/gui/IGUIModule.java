@@ -17,7 +17,13 @@ public interface IGUIModule {
 	public static final int ERROR_NOT_MY_TURN				= 103;
 	public static final int ERROR_NOT_MORE_SPACE_FOR_ARMIES	= 104;
 	public static final int ERROR_END_WAR_WHEN_IN_MY_TURN	= 105;
-
+	
+	public enum ShotImpact {
+		SHOT_IN_EMPTY_CELL,
+		SHOT_IN_UNIT_BUT_STILL_OPERATIONAL,
+		SHOT_IN_ALREADY_SHOT_UNIT,
+		SHOT_IN_UNIT_AND_DESTROYED
+	}
 	
 	/**
 	 * This method is called after  creating a GUI module.
@@ -34,10 +40,11 @@ public interface IGUIModule {
 	 * This method is called by the network module of the client when
 	 * the server wants to inform the client that an army has registered
 	 * into the war.
-	 * @param armyID the ID of th war
+	 * @param armyID the ID of the army
+	 * @param armyName the name of the army
 	 * @return NOTIFICATION_RECEIVED_OK or ERROR_NOT_REGISTERED_IN_WAR or ERROR_NOT_MORE_SPACE_FOR_ARMIES
 	 */
-	public int notifyArmyInWar(int armyID);
+	public int notifyArmyInWar(int armyID, String armyName);
 
 	
 	/**
@@ -81,7 +88,7 @@ public interface IGUIModule {
 	 * @param impact
 	 * @return NOTIFICATION_RECEIVED_OK or ERROR_NOT_REGISTERED_IN_WAR
 	 */
-	public int shotImpact(int targetArmyID, int row, int col, int impact);
+	public int shotImpact(int targetArmyID, int row, int col, ShotImpact impact);
 
 
 	

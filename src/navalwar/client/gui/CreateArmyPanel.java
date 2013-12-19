@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,7 +39,7 @@ public class CreateArmyPanel extends JPanel {
 	
 	private int[][] cells;
 
-	public CreateArmyPanel(int numTypeUnits, int[] numUnitsPerType, int[][][] shapeUnits) {
+	public CreateArmyPanel(ArrayList<Object> schema, Map<String, int[][]> shapes) {
 
 		//setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		//setLayout(new FlowLayout());
@@ -65,25 +66,27 @@ public class CreateArmyPanel extends JPanel {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(500, 400));
 
-		army = new ArmyPanel(ARMY_NUM_ROWS, ARMY_NUM_COLS);
+		army = new ArmyPanel(null, ARMY_NUM_ROWS, ARMY_NUM_COLS, false);
 		army.setBounds(OFFSET_ARMY_X, OFFSET_ARMY_Y,
 				ARMY_NUM_COLS * UnitPanel.CELL_SIZE_X, ARMY_NUM_ROWS * UnitPanel.CELL_SIZE_Y);
 		layeredPane.add(army, 0, 0);
 
 		numUnits = 0;
-		for(int i = 0; i < numTypeUnits; i++)
-			numUnits += numUnitsPerType[i];
+		for(int i = 0; i < schema.size()/2; i++)
+			numUnits += (Integer)schema.get(i*2+1);
 
 		units = new UnitPanel[numUnits];
 		int k = -1;
-		for(int i = 0; i < numTypeUnits; i++) {
-			int[][] shape = shapeUnits[i];
+		for(int i = 0; i < schema.size()/2; i++) {
+			String unitName = (String) schema.get(i*2);
+			int[][] shape = shapes.get(unitName);
 			int shapeRows = shape.length;
 			int shapeCols = shape[0].length;
 
-			for(int j = 0; j < numUnitsPerType[i]; j++) {
+			int numUnitsPerType = (Integer)schema.get(i*2+1);
+			for(int j = 0; j < numUnitsPerType; j++) {
 				k++;
-				UnitPanel unit = new UnitPanel(this, army, shapeRows, shapeCols, shape);
+				UnitPanel unit = new UnitPanel(this, army, unitName, shapeRows, shapeCols, shape);
 				int unitX = OFFSET_UNITS_X + (k % NUM_DISPLAYED_UNITS_PER_ROW) * SPACE_FOR_UNITS;
 				int unitY = OFFSET_UNITS_Y + (k / NUM_DISPLAYED_UNITS_PER_ROW) * SPACE_FOR_UNITS;
 				unit.setBounds(unitX, unitY, unit.getSizeX(), unit.getSizeY());
@@ -99,6 +102,7 @@ public class CreateArmyPanel extends JPanel {
 		add(layeredPane);
 	}
 	
+
 	public String getArmyName() { return tfArmyName.getText(); }
 
 	public void resetPanel() {
@@ -143,7 +147,7 @@ public class CreateArmyPanel extends JPanel {
 		List<UnitAndPlace> list = new ArrayList<UnitAndPlace>();
 		for(int i = 0 ; i < numUnits; i++) {
 			UnitPanel unit = units[i];
-			UnitAndPlace uap = new UnitAndPlace(unit.getName(), unit.getRow(), unit.getCol());
+			UnitAndPlace uap = new UnitAndPlace(unit.getUnitName(), unit.getRow(), unit.getCol());
 			list.add(uap);
 		}
 		return list;

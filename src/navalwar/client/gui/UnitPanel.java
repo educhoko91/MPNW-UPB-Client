@@ -23,6 +23,7 @@ public class UnitPanel extends JPanel {
 	private CreateArmyPanel createArmyPanel;
 	private ArmyPanel armyPanel;
 	
+	private String name;
 	private int[][] shape;
 	private JLabel[][] cells;
 	private int numRows;
@@ -41,12 +42,13 @@ public class UnitPanel extends JPanel {
 	
 	private Point mousePt;
 
-	public UnitPanel(CreateArmyPanel createArmyPanel, ArmyPanel armyPanel, int numRows, int numCols, int[][] shape) {
+	public UnitPanel(CreateArmyPanel createArmyPanel, ArmyPanel armyPanel, String unitName, int numRows, int numCols, int[][] shape) {
 		instance = this;
 		
 		this.createArmyPanel = createArmyPanel;
 		this.armyPanel = armyPanel;
-		
+
+		this.name = unitName;
 		this.shape = shape;
 		this.numRows = numRows;
 		this.numCols = numCols;
@@ -155,6 +157,12 @@ public class UnitPanel extends JPanel {
 		return ((row >= 0) && (row < armyPanel.getNumRows()) &&
 				(col >= 0) && (col < armyPanel.getNumCols()));
 	}
+
+
+	public String getUnitName() {
+		return name;
+	}
+	
 	
 	
 }
