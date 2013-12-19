@@ -100,7 +100,13 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	}
 
 	public int startWar(int warID, int armyID) {
-		// TODO Auto-generated method stub
+		try {
+			outToServer.writeBytes("StartMsg" + '\n'); 
+			outToServer.writeBytes("WarID:" + warID + '\n');
+			outToServer.writeBytes("armyID:" + armyID + '\n');
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
