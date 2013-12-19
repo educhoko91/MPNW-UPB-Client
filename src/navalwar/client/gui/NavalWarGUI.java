@@ -771,6 +771,9 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				System.out.println("gui:Disonnection form server failed.");
 			}
 			break;
+		case ACTION_EXIT_SELECTED:
+			this.dispose();
+			break;
 		}
 	}
 

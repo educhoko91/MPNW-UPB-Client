@@ -14,7 +14,7 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-public class doActionNavalWarGUITest {
+public class WarIDSetNavalWarGUITest {
 	
 	IClientNetworkModule net;
 	NavalWarGUI gui;
