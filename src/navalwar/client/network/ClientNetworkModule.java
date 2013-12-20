@@ -33,6 +33,8 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	public static final String SURRENDERMSG = "SurrenderMsg";
 	public static final String NEWENEMYMSG = "NewEnemyMsg";
 	public static final String ENEMYLISTMSG = "EnemyListMsg";
+	public static final String SHOTMSG = "SHOTMSG";
+	
 	IGUIModule gui = null;
 	
 	public Socket socket = null;
@@ -186,9 +188,17 @@ public class ClientNetworkModule implements IClientNetworkModule {
 		}
 	}
 
-	public int shot(int warID, int attackArmyID, int targetArmyID, int row,
-			int col) {
-		// TODO Auto-generated method stub
+	public int shot(int warID, int attackArmyID, int targetArmyID, int row, int col) {
+		try {
+			outToServer.writeBytes("MovementMsg" + '\n');
+			outToServer.writeBytes("WarID:" + warID + '\n');
+			outToServer.writeBytes("ArmyID:" + attackArmyID + '\n');
+			outToServer.writeBytes("AttackedID:" + targetArmyID + '\n');
+			outToServer.writeBytes("X:" + row + '\n');
+			outToServer.writeBytes("Y:" + col + '\n');
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 

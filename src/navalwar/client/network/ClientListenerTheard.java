@@ -26,7 +26,7 @@ public class ClientListenerTheard implements Runnable {
 				line = inFromServer.readLine();
 				System.out.println(line);
 				switch (line) {
-				case ClientNetworkModule.SHOOTMSG:
+				case ClientNetworkModule.SHOTMSG:
 					line = inFromServer.readLine();
 					token = new StringTokenizer(line);
 					token.nextToken(":");
