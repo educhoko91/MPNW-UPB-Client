@@ -20,12 +20,17 @@ import navalwar.server.gameengine.info.IWarInfo;
 
 public class ClientNetworkModule implements IClientNetworkModule {
 	
-	private static final String LISTMSG = "ListMsg"; 
-	private static final String GAMESMSG = "GamesMsg"; 
-	private static final String WARIDMSG = "WarIDMsg"; 
-	private static final String ARMYIDMSG = "ArmyIDMsg";
-	private static final String NEXTTURNMSG = "NextTurnMsg";
-
+	private ClientListenerTheard listener;
+	
+	public static final String LISTMSG = "ListMsg"; 
+	public static final String GAMESMSG = "GamesMsg"; 
+	public static final String WARIDMSG = "WarIDMsg"; 
+	public static final String ARMYIDMSG = "ArmyIDMsg";
+	public static final String NEXTTURNMSG = "NextTurnMsg";
+	public static final String SHOOTMSG = "ShootMsg";
+	public static final String SURRENDERMSG = "SurrenderMsg";
+	public static final String NEWENEMYMSG = "NewEnemyMsg";
+	public static final String ENEMYLISTMSG = "EnemyListMsg";
 	IGUIModule gui = null;
 	
 	private Socket socket = null;
@@ -109,16 +114,11 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("armyID:" + armyID + '\n');
 			String line =  inFromServer.readLine();
 			System.out.println(line);
-			if (line.equals(NEXTTURNMSG)) {
-				line = inFromServer.readLine();
-				StringTokenizer token = new StringTokenizer(line);
-				token.nextToken(":");
-				armyID = Integer.parseInt(token.nextToken());
-				System.out.println("NextTurn:" + armyID);
-				return armyID;
-			} else {
-				return -1;
-			}
+			listener = new ClientListenerTheard();
+			listener.bindInFromServer(inFromServer);
+			Thread th = new Thread(listener);
+			th.start();
+			return 1;  
 		} catch (UnknownHostException e) {
 			return -1;
 		} catch (IOException e) {
