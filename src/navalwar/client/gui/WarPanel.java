@@ -86,7 +86,7 @@ public class WarPanel extends JPanel {
 		 }
 	 }
 	 
-	 int addEnemyArmyField(int armyID, String armyName) {
+	 public int addEnemyArmyField(int armyID, String armyName) {
 		 if (numEnemiesArmies >= numCols*numRows) return IGUIModule.ERROR_NOT_MORE_SPACE_FOR_ARMIES;
 		 numEnemiesArmies++;
 		 int i = numEnemiesArmies / numCols;
@@ -95,6 +95,7 @@ public class WarPanel extends JPanel {
 		 army.setArmyID(armyID);
 		 army.setArmyName(armyName);
 		 enemiesArmies.put(armyID, army);
+		 this.add(army);
 		 army.setVisible(true);
 		 return IGUIModule.NOTIFICATION_RECEIVED_OK;
 	 }
@@ -133,6 +134,10 @@ public class WarPanel extends JPanel {
 
 	public void notifyClickOnCell(int armyID, int row, int col) {
 		navalWarGUI.notifyClickOnCell(armyID, row, col);
+	}
+	
+	public int getEnemyCant() {
+		return enemiesArmies.size();
 	}
 
 }

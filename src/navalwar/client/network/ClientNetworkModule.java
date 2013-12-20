@@ -33,9 +33,9 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	public static final String ENEMYLISTMSG = "EnemyListMsg";
 	IGUIModule gui = null;
 	
-	private Socket socket = null;
-	private DataOutputStream  outToServer = null;
-	private BufferedReader inFromServer = null;
+	public Socket socket = null;
+	public DataOutputStream  outToServer = null;
+	public BufferedReader inFromServer = null;
 	//--------------------------------------------
 	// Constructors & singleton pattern
 	//--------------------------------------------
@@ -100,8 +100,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			}else{
 				return -1;
 			}
-		} catch (UnknownHostException e) {
-			return -1;
 		} catch (IOException e) {
 			return -1;
 		}
@@ -115,8 +113,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			String line =  inFromServer.readLine();
 			System.out.println(line);
 			return 1;  
-		} catch (UnknownHostException e) {
-			return -1;
 		} catch (IOException e) {
 			return -1;
 		}
