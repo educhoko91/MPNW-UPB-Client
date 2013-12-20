@@ -131,7 +131,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	 * State attribuites
 	 */
 
-	private enum StateGUI {
+	public static enum StateGUI {
 		STATE_WELCOME,
 		STATE_CREATE_WAR,
 		STATE_REGISTER_ARMY,
@@ -141,7 +141,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		STATE_IN_WAR_AND_IN_TURN,
 		STATE_WAR_ENDED
 	}
-	private StateGUI state; 
+	public StateGUI state; 
 	private int warID;
 	private String warName;
 	private int ownArmyID;

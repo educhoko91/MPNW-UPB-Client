@@ -7,13 +7,14 @@ import java.util.StringTokenizer;
 import navalwar.client.gui.IGUIModule;
 import navalwar.client.gui.IGUIModule.ShotImpact;
 import navalwar.client.gui.NavalWarGUI;
+import navalwar.client.gui.NavalWarGUI.StateGUI;
 
 public class ClientListenerTheard implements Runnable {
 	
 	private BufferedReader inFromServer;
 	private String line;
 	private int armyID;
-	private IGUIModule gui;
+	private NavalWarGUI gui;
 	private StringTokenizer token;
 	private String name;
 
@@ -46,6 +47,7 @@ public class ClientListenerTheard implements Runnable {
 					break;
 					
 				case ClientNetworkModule.NEXTTURNMSG:
+					gui.state = StateGUI.STATE_IN_WAR_AND_WAIT_FOR_TURN;
 					line = inFromServer.readLine();
 					token = new StringTokenizer(line);
 					token.nextToken(":");
@@ -95,7 +97,7 @@ public class ClientListenerTheard implements Runnable {
 		
 	}
 	
-	public void bindNavalWarGUI (IGUIModule gui) {
+	public void bindNavalWarGUI (NavalWarGUI gui) {
 		this.gui = gui;
 		
 	}

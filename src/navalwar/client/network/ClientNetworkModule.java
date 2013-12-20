@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 
 import navalwar.client.gui.IGUIModule;
 import navalwar.client.gui.ListWarItem;
+import navalwar.client.gui.NavalWarGUI;
 import navalwar.server.gameengine.UnitAndPlace;
 import navalwar.server.gameengine.info.IArmyInfo;
 import navalwar.server.gameengine.info.IWarInfo;
@@ -212,7 +213,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	public void createTheard() {
 		listener = new ClientListenerTheard();
 		listener.bindInFromServer(inFromServer);
-		listener.bindNavalWarGUI(gui);
+		listener.bindNavalWarGUI((NavalWarGUI) gui);
 		Thread th = new Thread(listener);
 		th.start();
 		
