@@ -14,7 +14,7 @@ public class ImageIconTest {
 	ImageIcon icon;
 	FileNotFoundException e;
 
-	@Test(expected= FileNotFoundException.class)
+	@Test(expected= Exception.class)
 	public void testWrongFile() {
 		icon = new ImageIcon("None Existing File");
 	}
