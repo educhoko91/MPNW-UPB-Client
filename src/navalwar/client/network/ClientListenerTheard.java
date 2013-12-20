@@ -18,9 +18,11 @@ public class ClientListenerTheard implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("New Thread Created");
 		while(true) {
 			try {
 				line = inFromServer.readLine();
+				System.out.println(line);
 				switch (line) {
 				case ClientNetworkModule.SHOOTMSG:
 					line = inFromServer.readLine();

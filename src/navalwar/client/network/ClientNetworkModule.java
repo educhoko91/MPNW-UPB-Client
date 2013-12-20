@@ -114,10 +114,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("armyID:" + armyID + '\n');
 			String line =  inFromServer.readLine();
 			System.out.println(line);
-			listener = new ClientListenerTheard();
-			listener.bindInFromServer(inFromServer);
-			Thread th = new Thread(listener);
-			th.start();
 			return 1;  
 		} catch (UnknownHostException e) {
 			return -1;
@@ -184,6 +180,10 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				token.nextToken(":");
 				armyID = Integer.parseInt(token.nextToken());
 				System.out.println("ArmyID:" + armyID);
+				listener = new ClientListenerTheard();
+				listener.bindInFromServer(inFromServer);
+				Thread th = new Thread(listener);
+				th.start();
 			}
 			return armyID;
 		} catch (UnknownHostException e) {

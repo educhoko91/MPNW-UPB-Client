@@ -335,11 +335,11 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		serverPanel.setBorder(BorderFactory.createTitledBorder("Server"));
 		serverPanel.setLayout(new GridLayout(3,2));
 		serverPanel.add(new JLabel("IP: "));
-		ip = new JTextField("127.0.0.1");
+		ip = new JTextField("172.16.1.104");
 		ip.setHorizontalAlignment(JTextField.RIGHT);
 		serverPanel.add(ip);
 		serverPanel.add(new JLabel("Port: "));
-		port = new JTextField("7777");
+		port = new JTextField("6789");
 		port.setHorizontalAlignment(JTextField.RIGHT);
 		serverPanel.add(port);
 		btConnect = new JButton("Connect");
