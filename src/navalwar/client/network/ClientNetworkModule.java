@@ -23,7 +23,8 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	private static final String LISTMSG = "ListMsg"; 
 	private static final String GAMESMSG = "GamesMsg"; 
 	private static final String WARIDMSG = "WarIDMsg"; 
-	private static final String ARMYIDMSG = "ArmyIDMsg"; 
+	private static final String ARMYIDMSG = "ArmyIDMsg";
+	private static final String NEXTTURNMSG = "NextTurnMsg";
 
 	IGUIModule gui = null;
 	
@@ -106,10 +107,23 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("StartMsg" + '\n'); 
 			outToServer.writeBytes("WarID:" + warID + '\n');
 			outToServer.writeBytes("armyID:" + armyID + '\n');
+			String line =  inFromServer.readLine();
+			System.out.println(line);
+			if (line.equals(NEXTTURNMSG)) {
+				line = inFromServer.readLine();
+				StringTokenizer token = new StringTokenizer(line);
+				token.nextToken(":");
+				armyID = Integer.parseInt(token.nextToken());
+				System.out.println("NextTurn:" + armyID);
+				return armyID;
+			} else {
+				return -1;
+			}
+		} catch (UnknownHostException e) {
+			return -1;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return -1;
 		}
-		return 0;
 	}
 
 	public List<ListWarItem> getWarsList() {
