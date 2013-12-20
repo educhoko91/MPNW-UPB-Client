@@ -66,7 +66,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	private CreateWarPanel createWarPanel;
 	private ListWarsPanel listWarsPanel;
 	private CreateArmyPanel createArmyPanel;
-	private WarPanel warPanel;
+	public WarPanel warPanel;
 
 
 	//-----------------------------------
@@ -113,13 +113,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	// PLAYING MENU
 	//-----------------------------------
 
-	private JPanel playingMenuPanel;
+	public JPanel playingMenuPanel;
 	private JLabel lbWarNameInPlayingMenu;
-	private JLabel lbStatus;
-	private JLabel lbTotalNumShots;
-	private JLabel lbMyNumShots;
-	private JLabel lbNumShotsReceived;
-	private JLabel lbMyNumShotsInTarget;
+	public JLabel lbStatus;
+	public JLabel lbTotalNumShots;
+	public JLabel lbMyNumShots;
+	public JLabel lbNumShotsReceived;
+	public JLabel lbMyNumShotsInTarget;
 	private JButton btStartWar;
 	private JButton btSurrender;
 	private JButton btMainMenuAfterWar;

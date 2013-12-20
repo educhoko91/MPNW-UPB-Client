@@ -98,9 +98,9 @@ public class ClientNetworkModuleTest {
 		outToServer.writeBytes("WarID:" + warID + '\n');
 		PowerMock.expectLastCall();
 		outToServer.writeBytes("armyID:" + armyID + '\n');
-		PowerMock.expectLastCall();
-		EasyMock.expect(inFromServer.readLine()).andThrow(new IOException());
-		EasyMock.replay(inFromServer);
+		PowerMock.expectLastCall().andThrow(new IOException());
+		PowerMock.replay(outToServer);
+		
 		assertEquals(net.startWar(warID, armyID), -1);
 		
 	}
