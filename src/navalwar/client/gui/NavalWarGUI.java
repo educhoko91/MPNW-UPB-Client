@@ -803,6 +803,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 			showAlert("The war started !!!");
 			btStartWar.setEnabled(false);
 			btSurrender.setEnabled(true);
+			warPanel.startWar();
 			state = StateGUI.STATE_IN_WAR_AND_WAIT_FOR_TURN;
 			break;
 		

@@ -112,8 +112,6 @@ public class ClientNetworkModule implements IClientNetworkModule {
 			outToServer.writeBytes("StartMsg" + '\n'); 
 			outToServer.writeBytes("WarID:" + warID + '\n');
 			outToServer.writeBytes("armyID:" + armyID + '\n');
-			String line =  inFromServer.readLine();
-			System.out.println(line);
 			return 1;  
 		} catch (IOException e) {
 			return -1;
