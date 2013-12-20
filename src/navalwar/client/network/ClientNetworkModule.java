@@ -176,11 +176,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				token.nextToken(":");
 				armyID = Integer.parseInt(token.nextToken());
 				System.out.println("ArmyID:" + armyID);
-				listener = new ClientListenerTheard();
-				listener.bindInFromServer(inFromServer);
-				listener.bindNavalWarGUI(gui);
-				Thread th = new Thread(listener);
-				th.start();
+				
 			}
 			return armyID;
 		} catch (UnknownHostException e) {
@@ -211,6 +207,15 @@ public class ClientNetworkModule implements IClientNetworkModule {
 	public int surrender(int warID, int armyID) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public void createTheard() {
+		listener = new ClientListenerTheard();
+		listener.bindInFromServer(inFromServer);
+		listener.bindNavalWarGUI(gui);
+		Thread th = new Thread(listener);
+		th.start();
+		
 	}
 
 }

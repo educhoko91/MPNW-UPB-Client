@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import navalwar.client.network.ClientNetworkModule;
 import navalwar.client.network.IClientNetworkModule;
 
 /**
@@ -768,7 +769,6 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				break;    		
 			}
 			else {
-				state = StateGUI.STATE_WAIT_FOR_START_WAR;
 				showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
 			}
 			ownArmyID = armyID; 
@@ -780,6 +780,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 			btStartWar.setEnabled(warCreator);
 			btSurrender.setEnabled(true);
 			state = StateGUI.STATE_WAIT_FOR_START_WAR;
+			((ClientNetworkModule) net).createTheard();
 			break;
 
 		case ACTION_TO_MAIN_MENU_FROM_REGISTER_ARMY_MENU:
