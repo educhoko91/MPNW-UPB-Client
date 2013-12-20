@@ -11,14 +11,12 @@ import navalwar.client.network.IClientNetworkModule;
  */
 public interface IGUIModule {
 	
-	public static final int NOTIFICATION_RECEIVED_OK 		= -100;
-	public static final int ERROR_NOT_REGISTERED_IN_WAR 	= -101;
-	public static final int ERROR_ALREADY_MY_TURN			= -102;
-	public static final int ERROR_NOT_MY_TURN				= -103;
-	public static final int ERROR_NOT_MORE_SPACE_FOR_ARMIES	= -104;
-	public static final int ERROR_END_WAR_WHEN_IN_MY_TURN	= -105;
-	public static final int ERROR_WHILE_SHOOTING			= -106;
-	
+	public static final int NOTIFICATION_RECEIVED_OK 		= 100;
+	public static final int ERROR_NOT_REGISTERED_IN_WAR 	= 101;
+	public static final int ERROR_ALREADY_MY_TURN			= 102;
+	public static final int ERROR_NOT_MY_TURN				= 103;
+	public static final int ERROR_NOT_MORE_SPACE_FOR_ARMIES	= 104;
+	public static final int ERROR_END_WAR_WHEN_IN_MY_TURN	= 105;
 	
 	public enum ShotImpact {
 		SHOT_IN_EMPTY_CELL,

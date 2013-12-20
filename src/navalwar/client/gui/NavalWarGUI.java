@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -119,6 +120,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	private JLabel lbMyNumShotsInTarget;
 	private JButton btStartWar;
 	private JButton btSurrender;
+	private JButton btMainMenuAfterWar;
 
 	private JButton btTestAddEnemy;
 	private JButton btTestMyTurn;
@@ -143,6 +145,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	private String warName;
 	private int ownArmyID;
 	private boolean warCreator;
+
 
 
 
@@ -216,11 +219,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 
 	protected static final int ACTION_SURRENDER = 400;
 	protected static final int ACTION_START_WAR_SELECTED = 401;
-	protected static final int ACTION_TEST_ADD_ENEMY = 402;
-	protected static final int ACTION_TEST_MY_TURN = 403;
+	protected static final int ACTION_TO_MAIN_MENU_AFTER_WAR = 402;
+	protected static final int ACTION_TEST_ADD_ENEMY = 403;
+	protected static final int ACTION_TEST_MY_TURN = 404;
 
 	protected static final int ACTION_JOIN_WAR_SELECTED = 500;
 	protected static final int ACTION_TO_MAIN_MENU_FROM_LIST_WARS_MENU = 501;
+
 
 
 
@@ -534,10 +539,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		playingMenuPanel.add(btStartWar);
 		btSurrender = new JButton("Surrender");
 		playingMenuPanel.add(btSurrender);
+		btMainMenuAfterWar = new JButton("Main menu");
+		playingMenuPanel.add(btMainMenuAfterWar);
+		playingMenuPanel.add(Box.createGlue());
 		btTestAddEnemy = new JButton("Test Add Enemy");
-		playingMenuPanel.add(btTestAddEnemy);
+		//playingMenuPanel.add(btTestAddEnemy);
 		btTestMyTurn = new JButton("Test My Turn");
-		playingMenuPanel.add(btTestMyTurn);
+		//playingMenuPanel.add(btTestMyTurn);
 
 		//playingMenuPanel.add(Box.createGlue());
 
@@ -553,6 +561,12 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 			}
 		});
 		
+		btMainMenuAfterWar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doAction(ACTION_TO_MAIN_MENU_AFTER_WAR);
+			}
+		});
+		
 		btTestAddEnemy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				doAction(ACTION_TEST_ADD_ENEMY);
@@ -564,6 +578,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				doAction(ACTION_TEST_MY_TURN);
 			}
 		});
+		
 
 	}
 
@@ -630,10 +645,13 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	 * at the end of the game.
 	 **/
 	public void showAlert(String msg) {
+		// you lost... there is no more moves left!
+		//System.out.println("gui:message!");
 		JOptionPane.showMessageDialog(
-				this, msg, "title?",
-				JOptionPane.WARNING_MESSAGE,
-				new ImageIcon("images/sad.png"));
+				this, msg, "",
+				JOptionPane.INFORMATION_MESSAGE);
+		//,
+		//		new ImageIcon("images/sad.png"));
 		//btStop.setEnabled(false);
 		//btStart.setEnabled(true);
 		//score.setEnabled(false);
@@ -811,6 +829,16 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 			//shotImpact(ownArmyID, 4, 4, ShotImpact.SHOT_IN_UNIT_BUT_STILL_OPERATIONAL);
 			turnArmy();
 			break;
+			
+		case ACTION_TO_MAIN_MENU_AFTER_WAR:
+			this.warID = -1;
+			this.warName = "";
+			this.ownArmyID = -1;
+			this.warCreator = false;
+			showPanel("welcomePanel");
+			showMenu("mainMenuPanel");
+			state = StateGUI.STATE_WELCOME;
+			break;
 
 
 		case CONNECT:
@@ -934,6 +962,9 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 		if (!warPanel.isArmyInWar(ownArmyID)) return IGUIModule.ERROR_NOT_REGISTERED_IN_WAR;
 		warPanel.endWar();
 		showAlert("The war has finished");
+		btStartWar.setEnabled(false);
+		btSurrender.setEnabled(false);
+		btMainMenuAfterWar.setEnabled(true);
 		state = StateGUI.STATE_WAR_ENDED;
 		return NOTIFICATION_RECEIVED_OK;
 	}

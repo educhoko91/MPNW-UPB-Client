@@ -15,8 +15,9 @@ public class ArmyPanel extends JPanel {
 	public static ImageIcon IMG_EMPTY_CELL = new ImageIcon("res/empty_cell.jpg");
 	public static ImageIcon IMG_SHADOW_CELL = new ImageIcon("res/shadow_cell.jpg");
 	public static ImageIcon IMG_BLOCK_CELL = new ImageIcon("res/block.jpg");
-	public static ImageIcon IMG_SHOT_CELL = new ImageIcon("res/shot_cell.jpg");
 	public static ImageIcon IMG_SHOT_BLOCK_CELL = new ImageIcon("res/shot_block.jpg");
+	public static ImageIcon IMG_SHOT_EMPTY_CELL = new ImageIcon("res/shot_empty_cell.jpg");
+	public static ImageIcon IMG_SHOT_SHADOW_EMPTY_CELL = new ImageIcon("res/shot_shadow_empty_cell.jpg");
 	
 	
 	private ArmyPanel instance;
@@ -109,7 +110,10 @@ public class ArmyPanel extends JPanel {
 
 	public void drawShot(int row, int col, boolean inTarget) {
 		if (inTarget) cells[row][col].setIcon(IMG_SHOT_BLOCK_CELL);
-		else cells[row][col].setIcon(IMG_SHOT_CELL);
+		else {
+			if (isShadow) cells[row][col].setIcon(IMG_SHOT_SHADOW_EMPTY_CELL);
+			else cells[row][col].setIcon(IMG_SHOT_EMPTY_CELL);
+		}
 	}
 
 	public void resetArmy() {
