@@ -1,3 +1,4 @@
+
 package navalwar.client.gui;
 
 import java.awt.CardLayout;
@@ -1024,6 +1025,3 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 	public int getOwnArmyID() { return ownArmyID; }
 
 }
-
-
-
