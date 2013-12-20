@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import navalwar.client.gui.IGUIModule;
 import navalwar.client.gui.IGUIModule.ShotImpact;
 import navalwar.client.gui.NavalWarGUI;
 
@@ -12,7 +13,7 @@ public class ClientListenerTheard implements Runnable {
 	private BufferedReader inFromServer;
 	private String line;
 	private int armyID;
-	private NavalWarGUI gui;
+	private IGUIModule gui;
 	private StringTokenizer token;
 	private String name;
 
@@ -94,7 +95,7 @@ public class ClientListenerTheard implements Runnable {
 		
 	}
 	
-	public void bindNavalWarGUI (NavalWarGUI gui) {
+	public void bindNavalWarGUI (IGUIModule gui) {
 		this.gui = gui;
 		
 	}

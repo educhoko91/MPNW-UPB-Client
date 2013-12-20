@@ -182,6 +182,7 @@ public class ClientNetworkModule implements IClientNetworkModule {
 				System.out.println("ArmyID:" + armyID);
 				listener = new ClientListenerTheard();
 				listener.bindInFromServer(inFromServer);
+				listener.bindNavalWarGUI(gui);
 				Thread th = new Thread(listener);
 				th.start();
 			}

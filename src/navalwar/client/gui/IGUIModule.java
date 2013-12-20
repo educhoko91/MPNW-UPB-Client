@@ -91,6 +91,9 @@ public interface IGUIModule {
 	public int shotImpact(int targetArmyID, int row, int col, ShotImpact impact);
 
 
+	public int getOwnArmyID();
+
+
 	
 
 }
