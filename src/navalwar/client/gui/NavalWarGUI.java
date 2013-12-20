@@ -768,6 +768,7 @@ public class NavalWarGUI extends JFrame implements IGUIModule {
 				break;    		
 			}
 			else {
+				state = StateGUI.STATE_WAIT_FOR_START_WAR;
 				showAlert("Army was successfully registered. Now it is time to wait for the start of the war !!!");
 			}
 			ownArmyID = armyID; 

@@ -69,6 +69,12 @@ public class ClientListenerTheard implements Runnable {
 					break;
 					
 				case ClientNetworkModule.ENEMYLISTMSG:
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					int cnd = Integer.parseInt(inFromServer.readLine());
 					for (int i=0; i<cnd; i++) {
 						line = inFromServer.readLine();
