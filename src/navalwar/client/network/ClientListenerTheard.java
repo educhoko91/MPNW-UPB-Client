@@ -47,7 +47,8 @@ public class ClientListenerTheard implements Runnable {
 					break;
 					
 				case ClientNetworkModule.NEXTTURNMSG:
-					gui.state = StateGUI.STATE_IN_WAR_AND_WAIT_FOR_TURN;
+					if(gui.state==StateGUI.STATE_WAIT_FOR_START_WAR)
+						gui.startWar();
 					line = inFromServer.readLine();
 					token = new StringTokenizer(line);
 					token.nextToken(":");
