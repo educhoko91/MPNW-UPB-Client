@@ -71,7 +71,7 @@ public class ClientListenerTheard implements Runnable {
 				case ClientNetworkModule.ENEMYLISTMSG:
 					int cnd = Integer.parseInt(inFromServer.readLine());
 					for (int i=0; i<cnd; i++) {
-						inFromServer.readLine();
+						line = inFromServer.readLine();
 						token = new StringTokenizer(line);
 						token.nextToken(":");
 						armyID = Integer.parseInt(token.nextToken());
